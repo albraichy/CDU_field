@@ -33,11 +33,13 @@
             --input-border: #ced4da;
             --footer-bg: #e9ecef;
             
-            /* Status Colors */
-            --status-ok: #198754;
-            --status-no: #dc3545;
+            /* Accents */
             --badge-bg: var(--kipic-navy);
             --badge-text: #ffffff;
+            
+            /* Status Colors (Fixed) */
+            --status-ok: #198754; /* Green */
+            --status-no: #dc3545; /* Red */
         }
 
         [data-theme="dark"] {
@@ -64,8 +66,9 @@
             --badge-bg: var(--kipic-green);
             --badge-text: #000000;
             
-            --status-ok: #2ecc71;
-            --status-no: #e74c3c;
+            /* Brighten status colors slightly for dark mode visibility */
+            --status-ok: #2ecc71; 
+            --status-no: #e74c3c; 
         }
 
         body {
@@ -198,7 +201,7 @@
         }
         [data-theme="dark"] .card-title-text { color: var(--kipic-green); }
 
-        /* --- FORMS (Simplified) --- */
+        /* --- FORMS --- */
         .form-label { 
             color: var(--text-muted); 
             font-size: 0.8rem; 
@@ -206,13 +209,10 @@
             margin-bottom: 8px;
             display: flex;
             align-items: center;
-            gap: 8px; /* Space between icon and text */
+            gap: 8px;
         }
         
-        .label-icon {
-            color: var(--kipic-green);
-            font-size: 1.1rem;
-        }
+        .label-icon { color: var(--kipic-green); font-size: 1.1rem; }
 
         .form-select {
             background-color: var(--input-bg);
@@ -221,7 +221,7 @@
             padding: 10px 12px;
             border-radius: 8px;
             font-size: 0.95rem;
-            height: 46px; /* Taller for better touch */
+            height: 46px;
             transition: all 0.3s;
         }
         
@@ -239,7 +239,7 @@
 
         [dir="rtl"] .form-select { background-position: left 0.75rem center; }
 
-        /* --- TABLE --- */
+        /* --- TABLE & ICONS --- */
         .table { margin-bottom: 0; border-color: var(--border-color); color: var(--text-main); }
         
         .table tbody th {
@@ -273,11 +273,12 @@
             letter-spacing: 1px;
         }
 
-        /* Large standalone status icons */
-        .status-icon-only {
-            font-size: 1.5rem;
-            line-height: 1;
-        }
+        /* --- STATUS ICONS (FORCED COLORS) --- */
+        .status-icon-only { font-size: 1.5rem; line-height: 1; }
+        
+        /* Using !important to override any dark mode text whiteners */
+        .icon-ok { color: var(--status-ok) !important; }
+        .icon-no { color: var(--status-no) !important; }
 
         .no-data {
             text-align: center;
@@ -380,7 +381,7 @@
 </footer>
 
 <script>
-    // --- 1. CLEAN TRANSLATIONS (Simplified per request) ---
+    // --- 1. TRANSLATIONS ---
     const translations = {
         ar: {
             mainTitle: "سجل صمامات التحكم",
@@ -392,14 +393,12 @@
             placeholder: "يرجى اختيار البيانات لعرض التفاصيل",
             dataHeader: "البيانات الفنية",
             footerText: "قسم عمليات المصنع © 2025",
-            // Simple headers
             h_tag: "رقم التاق",
             h_service: "الوظيفة / الخدمة",
             h_action: "حالة الفشل",
             h_handjack: "تجاوز",
             h_pefs: "رقم المخطط (PEFS)",
             h_location: "الموقع",
-            // Simple values
             actions: { FC: "يغلق", FO: "يفتح", FL: "يثبت", "-": "-" },
             types: {
                 FV: "صمام تدفق", HV: "صمام يدوي", LV: "صمام مستوى",
@@ -416,14 +415,12 @@
             placeholder: "Please select data to view details",
             dataHeader: "Technical Data",
             footerText: "Plant Operations Dept. © 2025",
-            // Simple headers
             h_tag: "Tag No.",
             h_service: "Service Description",
             h_action: "Failure Action",
             h_handjack: "Hand Jack / Bypass",
             h_pefs: "PEFS No.",
             h_location: "Location",
-            // Simple values
             actions: { FC: "Close", FO: "Open", FL: "Lock", "-": "N/A" },
             types: {
                 FV: "Flow Valve", HV: "Hand Valve", LV: "Level Valve",
@@ -432,14 +429,14 @@
         }
     };
 
-    // --- 2. DATABASE (Same content, logic handles display) ---
+    // --- 2. DATABASE (Corrected Translation: "مياه التصريف") ---
     const database = [
         // FV Group
         { t: "FV", n: "01-FV-00001",  act: "FC", hj: "YES", pefs: "J-001",     s_en: "RETURN OIL SLOPS TO CRUDE FEED PUMP P-001A/B", s_ar: "إرجاع رواسب الزيت إلى مضخة تغذية النفط الخام P-001A/B", l_en: "NEAR CRUDE FEED PUMP P-001A/B", l_ar: "بالقرب من مضخة تغذية النفط الخام P-001A/B" },
         { t: "FV", n: "01-FV-00002",  act: "FC", hj: "YES", pefs: "J-001",     s_en: "CRUDE FEED FROM CRUDE FEED PUMP P-0001A/B", s_ar: "تغذية النفط الخام من مضخة الخام P-0001A/B", l_en: "NEAR DEMULSIFIER INJECTION PACKAGE", l_ar: "بالقرب من وحدة حقن مزيل الاستحلاب" },
         { t: "FV", n: "01-FV-00005",  act: "FO", hj: "YES", pefs: "J-001",     s_en: "CRUDE FEED PUMP (P-0001) MIN FLOW", s_ar: "التدفق الأدنى لمضخة تغذية النفط الخام (P-0001)", l_en: "NEAR CRUDE FEED PUMP P-001A/B", l_ar: "بالقرب من مضخة تغذية النفط الخام P-001A/B" },
         { t: "FV", n: "01-FV-00006",  act: "FC", hj: "YES", pefs: "J-010-002", s_en: "P-0021 A/B MINIMUM FLOW BYPASS", s_ar: "تجاوز التدفق الأدنى للمضخة P-0021 A/B", l_en: "P-0021 A/B STRUCTURE FIRST FLOOR", l_ar: "هيكل المضخة P-0021 A/B - الطابق الأول" },
-        { t: "FV", n: "01-FV-00014",  act: "FC", hj: "NO",  pefs: "J-007-002", s_en: "EFFLUENT WATER FROM MUD WASH PUMPS", s_ar: "المياه العادمة من مضخات غسيل الطين", l_en: "NEAR PUMP P-0027A", l_ar: "بالقرب من المضخة P-0027A" },
+        { t: "FV", n: "01-FV-00014",  act: "FC", hj: "NO",  pefs: "J-007-002", s_en: "EFFLUENT WATER FROM MUD WASH PUMPS", s_ar: "مياه التصريف من مضخات غسيل الطين", l_en: "NEAR PUMP P-0027A", l_ar: "بالقرب من المضخة P-0027A" },
         { t: "FV", n: "01-FV-00021A", act: "FL", hj: "YES", pefs: "J-015",     s_en: "FLASHED CRUDE PASS 1 TO CRUDE HEATER", s_ar: "النفط الخام الومضي (Pass 1) إلى السخان", l_en: "HEATER STRUCTURE NO.4 TOP FLOOR", l_ar: "هيكل السخان رقم 4 - الطابق العلوي" },
         { t: "FV", n: "01-FV-00021B", act: "FL", hj: "YES", pefs: "J-015",     s_en: "FLASHED CRUDE PASS 2 TO CRUDE HEATER", s_ar: "النفط الخام الومضي (Pass 2) إلى السخان", l_en: "HEATER STRUCTURE NO.4 TOP FLOOR", l_ar: "هيكل السخان رقم 4 - الطابق العلوي" },
         { t: "FV", n: "01-FV-00021C", act: "FL", hj: "YES", pefs: "J-015",     s_en: "FLASHED CRUDE PASS 3 TO CRUDE HEATER", s_ar: "النفط الخام الومضي (Pass 3) إلى السخان", l_en: "HEATER STRUCTURE NO.4 TOP FLOOR", l_ar: "هيكل السخان رقم 4 - الطابق العلوي" },
@@ -493,15 +490,15 @@
         { t: "HV", n: "01-HV-00230",  act: "-", "hj": "NO",  "pefs": "J-002-002", "s_en": "CRUDE FEED FROM CRUDE FEED PUMP", "s_ar": "تغذية النفط الخام من مضخة الخام", "l_en": "V-0004 STRUCTURE 5TH FLOOR", "l_ar": "هيكل V-0004 الطابق الخامس" },
 
         // LV Group
-        { t: "LV", n: "01-LV-00002",  act: "-", "hj": "NO",  "pefs": "J-002-002", "s_en": "EFL WTR TO DESALTER EFL WTR FLASH DRUM", "s_ar": "المياه العادمة إلى وعاء الوميض", "l_en": "NEAR P-0014A", "l_ar": "قرب P-0014A" },
+        { t: "LV", n: "01-LV-00002",  act: "-", "hj": "NO",  "pefs": "J-002-002", "s_en": "EFL WTR TO DESALTER EFL WTR FLASH DRUM", "s_ar": "مياه التصريف إلى وعاء الوميض", "l_en": "NEAR P-0014A", "l_ar": "قرب P-0014A" },
         { t: "LV", n: "01-LV-00005",  act: "FC", "hj": "YES", "pefs": "J-005", "s_en": "WASH WATER FM DESALTER WASH WATER PUMP P-0013A/B", "s_ar": "مياه الغسيل من مضخة غسيل الأملاح P-0013A/B", "l_en": "BETWEEN V-0001 & V-0002", "l_ar": "بين V-0001 و V-0002" },
         { t: "LV", n: "01-LV-00018",  act: "FC", "hj": "YES", "pefs": "J-029-002", "s_en": "SOUR WATER TO SOUR WATER STRIPPER", "s_ar": "المياه الحمضية إلى مجرد المياه", "l_en": "NEAR P-0008B", "l_ar": "قرب P-0008B" },
         { t: "LV", n: "01-LV-00019",  act: "FC", "hj": "YES", "pefs": "J-031-001", "s_en": "KEROSENE TO KEROSENE STRIPPER", "s_ar": "الكيروسين إلى مجرد الكيروسين", "l_en": "V-0004 STRUCTURE 2ND FLOOR", "l_ar": "هيكل V-0004 الطابق الثاني" },
         { t: "LV", n: "01-LV-00021",  act: "FC", "hj": "YES", "pefs": "J-033", "s_en": "LIGHT DIESEL TO LIGHT DIESEL STRIPPER", "s_ar": "الديزل الخفيف إلى مجرد الديزل", "l_en": "V-0004 STRUCTURE 4TH FLOOR", "l_ar": "هيكل V-0004 الطابق الرابع" },
         { t: "LV", n: "01-LV-00023",  act: "FC", "hj": "YES", "pefs": "J-034", "s_en": "HEAVY DIESEL TO HEAVY DIESEL STRIPPER", "s_ar": "الديزل الثقيل إلى مجرد الديزل", "l_en": "V-0001 COLUMN STRUCTURE", "l_ar": "هيكل العمود V-0001" },
         { t: "LV", n: "01-LV-00030",  act: "FO", "hj": "YES", "pefs": "J-040-001", "s_en": "SOR WATER FROM STAB OVERHD ACCUMULATOR", "s_ar": "المياه الحامضة من مجمع المثبت العلوي", "l_en": "STABILIZER STRUCTURE 1ST FLOOR", "l_ar": "هيكل المثبت - الطابق الأول" },
-        { t: "LV", n: "01-LV-00048",  act: "FO", "hj": "YES", "pefs": "J-010-001", "s_en": "DESALTR EFL WTR FR DESALTR EFL AIR CLR E-0045A/B", "s_ar": "مياه عادمة من مبرد هواء مزيل الأملاح E-0045A/B", "l_en": "FINFAN STRUCTURE WEST SIDE", "l_ar": "هيكل المروحة (غرب)" },
-        { t: "LV", n: "01-LV-00061",  act: "FC", "hj": "YES", "pefs": "J-010-002", "s_en": "EFLUENT WATER TO COMP SOUR WTR DRUM V-0016", "s_ar": "مياه عادمة إلى وعاء المياه الحمضية V-0016", l_en: "P-0021 A/B STRUCTURE FIRST FLOOR", l_ar: "هيكل المضخة P-0021 الطابق الأول" },
+        { t: "LV", n: "01-LV-00048",  act: "FO", "hj": "YES", "pefs": "J-010-001", "s_en": "DESALTR EFL WTR FR DESALTR EFL AIR CLR E-0045A/B", "s_ar": "مياه تصريف من مبرد هواء مزيل الأملاح E-0045A/B", "l_en": "FINFAN STRUCTURE WEST SIDE", "l_ar": "هيكل المروحة (غرب)" },
+        { t: "LV", n: "01-LV-00061",  act: "FC", "hj": "YES", "pefs": "J-010-002", "s_en": "EFLUENT WATER TO COMP SOUR WTR DRUM V-0016", "s_ar": "مياه تصريف إلى وعاء المياه الحمضية V-0016", l_en: "P-0021 A/B STRUCTURE FIRST FLOOR", l_ar: "هيكل المضخة P-0021 الطابق الأول" },
         { t: "LV", n: "01-LV-00134",  act: "FC", "hj": "YES", "pefs": "J-024", "s_en": "BPA PUMPDOWN TO CRUDE DISTILLATION COLUMN", "s_ar": "ضخ BPA لأسفل إلى عمود التقطير", "l_en": "V-0004 STRUCTURE 4TH FLOOR", "l_ar": "هيكل V-0004 الطابق الرابع" },
 
         // PDV Group
@@ -681,12 +678,12 @@
                 const t = translations[curLang];
                 const isAr = curLang === 'ar';
                 
-                // Logic: Icons only for Handjack
+                // Logic: Forced Colors using Classes
                 let hjDisplay = "";
                 if (record.hj === "YES") {
-                    hjDisplay = `<i class="bi bi-check-circle-fill text-ok status-icon-only"></i>`;
+                    hjDisplay = `<i class="bi bi-check-circle-fill status-icon-only icon-ok"></i>`;
                 } else if (record.hj === "NO") {
-                    hjDisplay = `<i class="bi bi-x-circle-fill text-no status-icon-only"></i>`;
+                    hjDisplay = `<i class="bi bi-x-circle-fill status-icon-only icon-no"></i>`;
                 } else {
                     hjDisplay = record.hj;
                 }
@@ -700,7 +697,6 @@
                 const rows = [
                     { label: t.h_tag, value: `<span class="tag-badge">${record.n}</span>` },
                     { label: t.h_service, value: serviceText },
-                    // Just the translated action (Open/Close)
                     { label: t.h_action, value: t.actions[record.act] || record.act },
                     { label: t.h_handjack, value: hjDisplay },
                     { label: t.h_pefs, value: record.pefs },
