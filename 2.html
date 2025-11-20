@@ -1,274 +1,381 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سجل صمامات التحكم - Control Valves Log</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
+    <title>Control Valves Log</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Roboto:wght@400;500;700;900&family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* --- إعدادات الألوان (Light/Dark) --- */
+        /* --- THEME VARIABLES (From Reference) --- */
         :root {
-            --bg-body: #f4f7f6;
+            --kipic-navy: #002F6C;       
+            --kipic-green: #6FAE27;      
+            --kipic-gradient: linear-gradient(135deg, var(--kipic-navy) 60%, #004494 100%);
+            --operator-blue: #004e92;    
+
+            /* Light Mode */
+            --bg-body: #f3f5f8;
             --bg-card: #ffffff;
-            --primary: #2c3e50;       /* لون الهيدر */
-            --accent: #3498db;        /* لون التمييز */
-            --text-main: #333333;
-            --text-light: #7f8c8d;
-            --border: #e0e0e0;
-            --shadow: 0 2px 15px rgba(0,0,0,0.05);
-            --success: #27ae60;
-            --danger: #c0392b;
-            --font-ar: 'Cairo', sans-serif;
-            --font-en: 'Segoe UI', sans-serif;
+            --text-main: #2c3e50;
+            --text-muted: #6c757d;
+            --border-color: #e9ecef;
+            --header-text: #ffffff;
+            --table-head-bg: #f1f3f5;    
+            --table-head-text: #495057;
+            --table-stripe: #f8f9fa;
+            --table-row-bg: #ffffff;     
+            --input-bg: #ffffff;
+            --footer-bg: #e9ecef;
+            
+            --badge-bg: var(--kipic-navy);
+            --badge-text: #ffffff;
+            --arrow-color: var(--kipic-navy);
+            --placeholder-color: #adb5bd;
+            
+            /* Status Colors */
+            --status-ok: #198754;
+            --status-no: #dc3545;
         }
 
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg-body: #1a1c23;
-                --bg-card: #252830;
-                --primary: #1a1c23;
-                --accent: #61dafb;
-                --text-main: #e0e0e0;
-                --text-light: #a0a0a0;
-                --border: #333;
-                --shadow: 0 4px 20px rgba(0,0,0,0.4);
-                --success: #2ecc71;
-                --danger: #e74c3c;
-            }
+        [data-theme="dark"] {
+            /* Dark Mode */
+            --bg-body: #121212;
+            --bg-card: #1e1e24;
+            --text-main: #e0e0e0;
+            --text-muted: #b0b0b0;
+            --border-color: #343a40;
+            --header-text: #e0e0e0;
+            
+            --table-head-bg: #0d1b2a;    
+            --table-head-text: #ced4da;
+            --table-row-bg: #151a21;     
+            --table-stripe: #1c232b;     
+            
+            --input-bg: #2b2b36;
+            --footer-bg: #1a1a1a;
+            --kipic-navy: #0d1b2a; 
+            --kipic-green: #7bc938;
+            
+            --badge-bg: var(--kipic-green);
+            --badge-text: #000000;
+            --arrow-color: var(--kipic-green);
+            --placeholder-color: #6c757d;
+
+            --status-ok: #2ecc71;
+            --status-no: #e74c3c;
         }
 
-        /* --- التنسيق العام --- */
         body {
-            font-family: var(--font-ar);
+            font-family: 'Roboto', 'Tajawal', sans-serif;
             background-color: var(--bg-body);
             color: var(--text-main);
-            margin: 0;
-            padding: 0;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s ease;
         }
 
-        /* --- الهيدر (شريط علوي) --- */
-        .top-navbar {
-            background-color: var(--primary);
-            color: white;
-            padding: 15px 20px;
+        /* --- HEADER --- */
+        .main-header {
+            background: var(--kipic-gradient);
+            color: var(--header-text);
+            padding: 1.5rem 2rem;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            text-align: center;
+            border-bottom: 4px solid var(--kipic-green); 
+        }
+
+        .header-title-main {
+            font-weight: 800;
+            font-size: 1.8rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .header-subtitle {
+            font-weight: 400;
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-top: 4px;
+            color: #d1e7dd; 
+        }
+
+        .header-controls {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            inset-inline-end: 25px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            direction: ltr !important; 
+        }
+
+        .icon-btn {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.25);
+            color: #fff;
+            border-radius: 8px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .icon-btn:hover { background: var(--kipic-green); border-color: var(--kipic-green); }
+
+        /* Language Switch */
+        .lang-switch-container {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 2px;
+            display: flex;
+            position: relative;
+            cursor: pointer;
+            width: 76px;
+            height: 34px;
+        }
+        
+        .lang-option {
+            flex: 1;
+            text-align: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            z-index: 2;
+            line-height: 28px;
+            color: rgba(255, 255, 255, 0.6);
+            transition: color 0.3s;
+        }
+        .lang-option.active { color: #fff; }
+
+        .lang-slider {
+            position: absolute;
+            top: 2px;
+            bottom: 2px;
+            left: 2px;
+            width: 50%;
+            background: var(--kipic-green);
+            border-radius: 16px;
+            transition: transform 0.3s ease;
+            z-index: 1;
+        }
+        
+        .lang-switch-container.ar-active .lang-slider {
+            transform: translateX(92%);
+        }
+
+        /* --- CARDS --- */
+        .card {
+            background-color: var(--bg-card);
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            margin-bottom: 20px;
+            overflow: hidden;
+            border-top: 3px solid var(--kipic-navy); 
+            transition: border-color 0.3s ease;
+        }
+        
+        [data-theme="dark"] .card { border-top-color: var(--kipic-green) !important; }
+        
+        .card-header-custom {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--border-color);
+            background-color: transparent;
         }
 
-        .brand {
-            font-size: 1.2rem;
+        .card-title-text {
+            color: var(--kipic-navy);
             font-weight: 700;
+            margin: 0;
+            font-size: 1rem;
             display: flex;
             align-items: center;
             gap: 10px;
         }
+        [data-theme="dark"] .card-title-text { color: var(--kipic-green); }
 
-        .brand span {
-            color: var(--accent);
-        }
-
-        /* --- زر اللغة --- */
-        .btn-toggle {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 6px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.2s;
-            font-family: var(--font-en);
-        }
-        .btn-toggle:hover { background: rgba(255, 255, 255, 0.2); }
-
-        /* --- الحاوية الرئيسية --- */
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 20px 40px 20px;
-        }
-
-        /* --- البطاقات (Cards) --- */
-        .card {
-            background: var(--bg-card);
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            padding: 25px;
-            margin-bottom: 25px;
-            border: 1px solid var(--border);
-        }
-
-        .card-header {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--border);
-            color: var(--accent);
-        }
-
-        /* --- الفلاتر --- */
-        .filters {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        label {
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--text-light);
-        }
-
-        select {
-            padding: 12px 15px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            background: var(--bg-body);
-            color: var(--text-main);
-            font-size: 1rem;
-            font-family: inherit;
-            cursor: pointer;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-        select:focus { border-color: var(--accent); }
-        select:disabled { opacity: 0.6; cursor: not-allowed; }
-
-        /* --- الجدول والنتائج --- */
-        .result-area {
-            min-height: 200px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            margin-top: 10px;
-        }
-
-        th, td {
-            padding: 15px;
-            border-bottom: 1px solid var(--border);
-            text-align: inherit;
-        }
-
-        th {
-            background-color: rgba(0,0,0,0.02);
-            color: var(--text-light);
-            font-weight: 600;
-            font-size: 0.9rem;
-            width: 35%;
-        }
+        /* --- INPUTS --- */
+        .form-label { color: var(--text-muted); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
         
-        td {
+        .form-select {
+            background-color: var(--input-bg);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            height: 42px;
+        }
+        .form-select:focus {
+            border-color: var(--kipic-green);
+            box-shadow: 0 0 0 3px rgba(111, 174, 39, 0.15);
+        }
+        [dir="rtl"] .form-select { background-position: left 0.75rem center; padding-right: 0.75rem; padding-left: 2.25rem; }
+
+        /* --- TABLES --- */
+        .table { margin-bottom: 0; border-color: var(--border-color); color: var(--text-main); }
+        .table thead th {
+            background-color: var(--table-head-bg);
+            color: var(--table-head-text);
             font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            padding: 12px 15px;
+            border-bottom: 2px solid #dee2e6;
         }
-
-        tr:last-child th, tr:last-child td {
-            border-bottom: none;
+        [data-theme="dark"] .table thead th { border-bottom-color: #495057; }
+        .table td {
+            background-color: var(--table-row-bg);
+            padding: 12px 15px;
+            vertical-align: middle;
+            border-color: var(--border-color);
+            color: var(--text-main);
+            font-size: 0.95rem;
+            font-weight: 500;
         }
+        .val-display { font-family: 'Roboto Mono', monospace; font-weight: 700; }
 
-        /* --- التزيين (Badges & Icons) --- */
+        /* --- CUSTOM ELEMENTS --- */
         .tag-badge {
-            background-color: var(--accent);
-            color: #fff;
+            background-color: var(--badge-bg);
+            color: var(--badge-text);
             padding: 4px 12px;
-            border-radius: 4px;
-            font-family: monospace;
+            border-radius: 6px;
+            font-family: 'Roboto Mono', monospace;
+            font-weight: 700;
             letter-spacing: 1px;
-            font-size: 1rem;
         }
 
-        .status-icon { font-size: 1.2rem; vertical-align: middle; margin-inline-end: 5px; }
-        .status-ok { color: var(--success); }
-        .status-no { color: var(--danger); }
+        .status-icon { font-size: 1.3rem; vertical-align: middle; }
+        .text-ok { color: var(--status-ok); }
+        .text-no { color: var(--status-no); }
 
         .no-data {
             text-align: center;
-            color: var(--text-light);
             padding: 40px;
-            background: rgba(0,0,0,0.02);
-            border-radius: 8px;
+            color: var(--text-muted);
             font-style: italic;
         }
 
-        /* --- English Font Override --- */
-        html[lang="en"] body { font-family: var(--font-en); }
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .main-header { padding: 1rem 1.2rem; }
+            .header-title-main { font-size: 1.3rem; }
+            .header-subtitle { font-size: 0.9rem; }
+            .header-controls { position: static; transform: none; margin-top: 10px; justify-content: center; }
+            #theme-toggle-btn { display: none !important; } /* Manual toggle hidden on mobile as per ref */
+        }
+        
+        .site-footer {
+            margin-top: auto;
+            background-color: var(--footer-bg);
+            border-top: 1px solid var(--border-color);
+            padding: 20px 0;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 
-    <nav class="top-navbar">
-        <div class="brand">
-            <span>CDU</span> Control Valves Log
+<header class="main-header">
+    <div class="container-fluid p-0">
+        <div class="row align-items-center justify-content-center position-relative">
+            <div class="col-12 text-center">
+                <div class="header-title-main" data-i18n="mainTitle">Control Valves Log</div>
+                <div class="header-subtitle" data-i18n="subTitle">Technical Inquiry System</div>
+            </div>
+            <div class="header-controls">
+                <button class="icon-btn" id="theme-toggle-btn" onclick="toggleThemeManual()" title="Switch Theme">
+                    <i class="bi bi-sun-fill" id="theme-icon"></i>
+                </button>
+                
+                <div class="lang-switch-container" id="lang-switch" onclick="toggleLanguage()">
+                    <div class="lang-slider"></div>
+                    <span class="lang-option active" id="opt-en">EN</span>
+                    <span class="lang-option" id="opt-ar">AR</span>
+                </div>
+            </div>
         </div>
-        <button class="btn-toggle" onclick="toggleLang()" id="langBtn">English</button>
-    </nav>
+    </div>
+</header>
 
-    <div class="container">
+<div class="container py-4 py-md-5">
+    
+    <div class="card p-3 p-md-4">
+        <div class="row g-3 align-items-end justify-content-center">
+            <div class="col-md-5">
+                <label class="form-label" data-i18n="lblType">Valve Type</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-transparent border-end-0" style="border-color:var(--border-color)"><i class="bi bi-funnel text-muted"></i></span>
+                    <select class="form-select border-start-0 ps-0" id="controlType" onchange="populateNumbers()">
+                        </select>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <label class="form-label" data-i18n="lblTag">Tag Number</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-transparent border-end-0" style="border-color:var(--border-color)"><i class="bi bi-tag text-muted"></i></span>
+                    <select class="form-select border-start-0 ps-0" id="controlNumber" onchange="showData()" disabled>
+                        </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" id="results-card">
+        <div class="card-header-custom">
+            <h5 class="card-title-text">
+                <i class="bi bi-clipboard-data"></i>
+                <span data-i18n="dataHeader">Technical Data</span>
+            </h5>
+        </div>
         
-        <div class="card">
-            <div class="card-header" data-key="title">خيارات البحث</div>
-            <div class="filters">
-                <div class="form-group">
-                    <label data-key="lblType">نوع الصمام</label>
-                    <select id="controlType" onchange="populateNumbers()">
-                        <option value="" data-key="optSelect">-- اختر النوع --</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label data-key="lblTag">رقم التاق</label>
-                    <select id="controlNumber" onchange="showData()" disabled>
-                        <option value="" data-key="optSelectNum">-- اختر الرقم --</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <div class="card result-area">
-            <div class="card-header" data-key="subtitle">البيانات الفنية</div>
-            
-            <div id="placeholder" class="no-data" data-key="placeholder">
-                يرجى اختيار نوع الصمام ورقم التاق من القائمة أعلاه
+        <div class="card-body p-0 table-responsive">
+            <div id="placeholder" class="no-data" data-i18n="placeholder">
+                Please select valve type and tag number...
             </div>
 
-            <table id="dataTable" style="display: none;">
+            <table id="dataTable" class="table table-hover" style="display: none;">
                 <tbody id="tableBody">
                     </tbody>
             </table>
         </div>
-
     </div>
+</div>
+
+<footer class="site-footer">
+    <div class="container">
+        <span data-i18n="footerText">Plant Operations Dept. © 2025</span>
+    </div>
+</footer>
 
 <script>
-    // ==========================================
-    // نفس كود الجافاسكربت تماماً دون تغيير
-    // ==========================================
-
-    // --- 1. الترجمة (Translations) ---
+    // --- 1. TRANSLATIONS (Updated with UI keys) ---
     const translations = {
         ar: {
-            title: "خيارات البحث",
-            subtitle: "البيانات الفنية",
+            mainTitle: "سجل صمامات التحكم",
+            subTitle: "نظام الاستعلام الفني",
             lblType: "نوع الصمام",
             lblTag: "رقم التاق",
             optSelect: "-- اختر النوع --",
             optSelectNum: "-- اختر الرقم --",
             placeholder: "يرجى اختيار البيانات لعرض التفاصيل",
-            langBtn: "English",
+            dataHeader: "البيانات الفنية",
+            footerText: "قسم عمليات المصنع © 2025",
             h_service: "الوظيفة / الخدمة",
             h_action: "حالة الفشل",
             h_handjack: "تجاوز (Hand Jack)",
@@ -282,14 +389,15 @@
             }
         },
         en: {
-            title: "Search Options",
-            subtitle: "Technical Data",
+            mainTitle: "Control Valves Log",
+            subTitle: "Technical Inquiry System",
             lblType: "Valve Type",
             lblTag: "Tag Number",
             optSelect: "-- Select Type --",
             optSelectNum: "-- Select Number --",
             placeholder: "Please select data to view details",
-            langBtn: "عربي",
+            dataHeader: "Technical Data",
+            footerText: "Plant Operations Dept. © 2025",
             h_service: "Service Description",
             h_action: "Failure Action",
             h_handjack: "Hand Jack / Bypass",
@@ -304,7 +412,7 @@
         }
     };
 
-    // --- 2. البيانات (Database) ---
+    // --- 2. DATABASE (Same Data) ---
     const database = [
         // FV Group
         { t: "FV", n: "01-FV-00001",  act: "FC", hj: "YES", pefs: "J-001",     s_en: "RETURN OIL SLOPS TO CRUDE FEED PUMP P-001A/B", s_ar: "إرجاع رواسب الزيت إلى مضخة تلقيم الخام P-001A/B", l_en: "NEAR CRUDE FEED PUMP P-001A/B", l_ar: "بالقرب من مضخة تلقيم الخام P-001A/B" },
@@ -420,43 +528,81 @@
         { t: "TV", n: "01-TV-00527",  act: "FC", "hj": "YES", "pefs": "J-075", "s_en": "OFF GAS COMPRESSOR (CCW CONSOLE)", "s_ar": "ضاغط الغازات المنبعثة (منصة CCW)", "l_en": "COMPRESSOR K-0001 SHED", "l_ar": "سقيفة الضاغط K-0001" }
     ];
 
-    // --- 3. المنطق البرمجي (App Logic) ---
+    // --- 3. LOGIC ---
     
-    let currentLang = localStorage.getItem('lang') || (navigator.language.startsWith('ar') ? 'ar' : 'en');
-    
+    let curLang = localStorage.getItem('cv-lang') || (navigator.language.startsWith('ar') ? 'ar' : 'en');
+
     document.addEventListener('DOMContentLoaded', () => {
-        applyLanguage(currentLang);
+        // Theme Listener
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+             const newTheme = event.matches ? 'dark' : 'light';
+             document.documentElement.setAttribute('data-theme', newTheme);
+             updateThemeIcon();
+        });
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+        updateThemeIcon();
+
+        applyLanguageUI();
         populateTypes();
     });
 
-    function toggleLang() {
-        currentLang = currentLang === 'ar' ? 'en' : 'ar';
-        localStorage.setItem('lang', currentLang);
-        applyLanguage(currentLang);
+    function toggleThemeManual() {
+        const html = document.documentElement;
+        const isDark = html.getAttribute('data-theme') === 'dark';
+        html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        updateThemeIcon();
+    }
+
+    function updateThemeIcon() {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        const icon = document.getElementById('theme-icon');
+        if(icon) icon.className = isDark ? "bi bi-moon-stars-fill" : "bi bi-sun-fill";
+    }
+
+    function toggleLanguage() {
+        curLang = curLang === 'en' ? 'ar' : 'en';
+        localStorage.setItem('cv-lang', curLang);
+        applyLanguageUI();
         populateTypes();
         if(document.getElementById('controlNumber').value) showData();
     }
 
-    function applyLanguage(lang) {
-        document.documentElement.lang = lang;
-        document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    function applyLanguageUI() {
+        document.body.dir = curLang === 'ar' ? 'rtl' : 'ltr';
         
-        document.querySelectorAll('[data-key]').forEach(el => {
-            el.textContent = translations[lang][el.getAttribute('data-key')];
+        // Slider Animation
+        const container = document.getElementById('lang-switch');
+        const optEn = document.getElementById('opt-en');
+        const optAr = document.getElementById('opt-ar');
+        
+        if (curLang === 'ar') {
+            container.classList.add('ar-active');
+            optAr.classList.add('active');
+            optEn.classList.remove('active');
+        } else {
+            container.classList.remove('ar-active');
+            optEn.classList.add('active');
+            optAr.classList.remove('active');
+        }
+        
+        // Translate Text
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            let key = el.getAttribute('data-i18n');
+            if (translations[curLang][key]) el.innerText = translations[curLang][key];
         });
-        document.getElementById('langBtn').textContent = translations[lang].langBtn;
     }
 
+    // Data Helpers
     function getCleanNumber(fullTag) {
         const parts = fullTag.split('-');
         const lastPart = parts[parts.length - 1];
         return lastPart.replace(/^0+/, '');
     }
 
-    // دالة تنسيق أرقام المضخات (P-0003A -> P3 A)
     function formatPumpCodes(text) {
         if (!text) return text;
-        // البحث عن نمط P-0000X واستبداله
         return text.replace(/P-0*(\d+)\s*([A-Z/]*)/g, "P$1 $2");
     }
 
@@ -468,26 +614,25 @@
 
     function populateTypes() {
         const selectedValue = typeSelect.value;
-        typeSelect.innerHTML = `<option value="">${translations[currentLang].optSelect}</option>`;
+        typeSelect.innerHTML = `<option value="">${translations[curLang].optSelect}</option>`;
         
         const types = [...new Set(database.map(item => item.t))].sort();
         
         types.forEach(type => {
             const option = document.createElement('option');
             option.value = type;
-            const label = currentLang === 'ar' 
+            const label = curLang === 'ar' 
                 ? `${type} - ${translations.ar.types[type]}`
                 : `${type} - ${translations.en.types[type]}`;
             option.textContent = label;
             typeSelect.appendChild(option);
         });
-        
         typeSelect.value = selectedValue;
     }
 
     function populateNumbers() {
         const selectedType = typeSelect.value;
-        numSelect.innerHTML = `<option value="">${translations[currentLang].optSelectNum}</option>`;
+        numSelect.innerHTML = `<option value="">${translations[curLang].optSelectNum}</option>`;
         numSelect.disabled = true;
         table.style.display = "none";
         placeholder.style.display = "block";
@@ -517,20 +662,19 @@
             const record = database.find(item => item.n === selectedTag);
             
             if (record) {
-                const t = translations[currentLang];
-                const isAr = currentLang === 'ar';
+                const t = translations[curLang];
+                const isAr = curLang === 'ar';
                 
-                // معالجة قيمة التجاوز (Hand Jack)
+                // Status Icons Logic
                 let hjDisplay = "";
                 if (record.hj === "YES") {
-                    hjDisplay = `<span class="status-icon status-ok">✔</span>`;
+                    hjDisplay = `<i class="bi bi-check-circle-fill status-icon text-ok"></i> YES`;
                 } else if (record.hj === "NO") {
-                    hjDisplay = `<span class="status-icon status-no">✘</span>`;
+                    hjDisplay = `<i class="bi bi-x-circle-fill status-icon text-no"></i> NO`;
                 } else {
                     hjDisplay = record.hj;
                 }
 
-                // معالجة النصوص لتنسيق أرقام المضخات
                 let serviceText = isAr ? record.s_ar : record.s_en;
                 let locationText = isAr ? record.l_ar : record.l_en;
                 
@@ -543,7 +687,7 @@
                     { label: t.h_action, value: t.actions[record.act] || record.act },
                     { label: t.h_handjack, value: hjDisplay },
                     { label: t.h_pefs, value: record.pefs },
-                    { label: t.h_location, value: '📍 ' + locationText }
+                    { label: t.h_location, value: `<i class="bi bi-geo-alt-fill text-danger me-1"></i> ` + locationText }
                 ];
 
                 rows.forEach(row => {
