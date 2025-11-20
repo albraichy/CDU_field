@@ -14,8 +14,8 @@
             --primary-color: #007bff;
             --th-bg: #34495e;
             --th-text: #ffffff;
-            --hover-bg: #f1f1f1;
-            --shadow: rgba(0,0,0,0.05);
+            --highlight: #e1f5fe;
+            --highlight-text: #0288d1;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -28,50 +28,47 @@
                 --primary-color: #4dabf7;
                 --th-bg: #2c2c2c;
                 --th-text: #ffffff;
-                --hover-bg: #2a2a2a;
-                --shadow: rgba(0,0,0,0.5);
+                --highlight: #152e3d;
+                --highlight-text: #4fc3f7;
             }
         }
 
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-color); padding: 20px; margin: 0; transition: background-color 0.3s, color 0.3s; }
-        .container { max-width: 900px; margin: 30px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px var(--shadow); transition: background 0.3s; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-color); padding: 20px; margin: 0; transition: all 0.3s ease; }
+        .container { max-width: 800px; margin: 30px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         
         header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-color); padding-bottom: 15px; margin-bottom: 20px; }
         .header-text { text-align: center; flex-grow: 1; }
-        h2 { margin: 0; }
-        p.subtitle { color: var(--sub-text); font-size: 14px; margin-top: 5px; }
+        h2 { margin: 0; font-size: 1.5rem; }
+        p.subtitle { color: var(--sub-text); font-size: 0.9rem; margin-top: 5px; }
         
-        .controls { display: flex; gap: 10px; }
-        .btn-toggle { background: none; border: 1px solid var(--border-color); color: var(--text-color); padding: 5px 10px; border-radius: 5px; cursor: pointer; font-weight: bold; }
-        .btn-toggle:hover { background: var(--hover-bg); }
+        .btn-toggle { background: none; border: 1px solid var(--text-color); color: var(--text-color); padding: 5px 12px; border-radius: 5px; cursor: pointer; font-weight: bold; opacity: 0.8; }
+        .btn-toggle:hover { opacity: 1; background: var(--border-color); }
 
-        .filters { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; background: var(--hover-bg); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color); }
-        .form-group { display: flex; flex-direction: column; min-width: 200px; }
-        label { font-size: 13px; font-weight: bold; margin-bottom: 5px; color: var(--text-color); }
-        select { padding: 10px; border-radius: 6px; border: 1px solid var(--sub-text); font-size: 15px; background: var(--card-bg); color: var(--text-color); cursor: pointer; outline: none; }
-        select:disabled { opacity: 0.6; cursor: not-allowed; }
-
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; border-radius: 8px; overflow: hidden; }
-        th, td { padding: 15px; text-align: inherit; border-bottom: 1px solid var(--border-color); }
-        th { background-color: var(--th-bg); color: var(--th-text); width: 30%; }
-        td { background-color: var(--card-bg); }
+        .filters { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; background: rgba(127, 140, 141, 0.05); padding: 20px; border-radius: 8px; }
+        .form-group { display: flex; flex-direction: column; min-width: 200px; flex: 1; }
+        label { font-size: 0.85rem; font-weight: bold; margin-bottom: 8px; color: var(--text-color); }
+        select { padding: 12px; border-radius: 6px; border: 1px solid var(--sub-text); font-size: 1rem; background: var(--card-bg); color: var(--text-color); cursor: pointer; outline: none; }
         
-        .tag-badge { display: inline-block; background: rgba(0, 123, 255, 0.1); color: var(--primary-color); padding: 5px 10px; border-radius: 4px; font-weight: bold; font-family: monospace; border: 1px solid var(--primary-color); }
-        .no-data { text-align: center; color: var(--sub-text); margin-top: 40px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); }
+        th, td { padding: 12px 15px; text-align: inherit; border-bottom: 1px solid var(--border-color); }
+        th { background-color: var(--th-bg); color: var(--th-text); width: 35%; font-weight: 500; font-size: 0.95rem; }
+        td { font-size: 0.95rem; }
+        
+        .tag-badge { display: inline-block; background: var(--highlight); color: var(--highlight-text); padding: 4px 10px; border-radius: 4px; font-weight: bold; font-family: monospace; letter-spacing: 1px; }
+        .no-data { text-align: center; color: var(--sub-text); margin-top: 40px; font-style: italic; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <header>
-        <div class="controls">
-            <button class="btn-toggle" onclick="toggleLang()" id="langBtn">EN</button>
-        </div>
+        <button class="btn-toggle" onclick="toggleLang()" id="langBtn">EN</button>
         <div class="header-text">
             <h2 data-key="title">قائمة صمامات التحكم</h2>
             <p class="subtitle" data-key="subtitle">نظام الاستعلام الفني</p>
         </div>
-        <div style="width: 50px;"></div> </header>
+        <div style="width: 40px;"></div>
+    </header>
     
     <div class="filters">
         <div class="form-group">
@@ -93,7 +90,6 @@
         <div id="placeholder" class="no-data" data-key="placeholder">
             يرجى اختيار البيانات لعرض التفاصيل
         </div>
-        
         <table id="dataTable" style="display: none;">
             <tbody id="tableBody"></tbody>
         </table>
@@ -101,7 +97,7 @@
 </div>
 
 <script>
-    // --- 1. قاموس الترجمة ---
+    // --- 1. قاموس الترجمة (Translations) ---
     const translations = {
         ar: {
             title: "قائمة صمامات التحكم",
@@ -112,27 +108,22 @@
             optSelectNum: "-- اختر الرقم --",
             placeholder: "يرجى اختيار البيانات لعرض التفاصيل",
             langBtn: "English",
-            fields: {
-                Service: "الخدمة / الوظيفة",
-                Action: "حالة الفشل (Failure Action)",
-                HandJack: "Hand Jack / Bypass",
-                PEFS: "رقم المخطط (PEFS)",
-                Location: "الموقع",
-                TagNo: "رقم التاق الكامل"
-            },
+            // Headers
+            h_service: "الوظيفة / الخدمة",
+            h_action: "حالة الفشل",
+            h_handjack: "Hand Jack",
+            h_pefs: "رقم المخطط (PEFS)",
+            h_location: "الموقع",
+            h_tag: "رقم التاق",
+            // Values
+            actions: { FC: "يغلق", FO: "يفتح", FL: "يثبت", "-": "-" },
             types: {
-                FV: "صمام تدفق (Flow Valve)",
-                HV: "صمام يدوي (Hand Valve)",
-                LV: "صمام مستوى (Level Valve)",
-                PDV: "صمام فرق ضغط (Diff. Pressure)",
-                PV: "صمام ضغط (Pressure Valve)",
-                TV: "صمام حرارة (Temp. Valve)"
-            },
-            actions: {
-                FC: "فشل في الإغلاق (Fail to Close)",
-                FO: "فشل في الفتح (Fail to Open)",
-                FL: "فشل في القفل (Fail to Lock)",
-                "-": "غير محدد"
+                FV: "صمام تدفق",
+                HV: "صمام يدوي",
+                LV: "صمام مستوى",
+                PDV: "صمام فرق ضغط",
+                PV: "صمام ضغط",
+                TV: "صمام حرارة"
             }
         },
         en: {
@@ -144,89 +135,170 @@
             optSelectNum: "-- Select Number --",
             placeholder: "Please select data to view details",
             langBtn: "عربي",
-            fields: {
-                Service: "Service Description",
-                Action: "Failure Action",
-                HandJack: "Hand Jack / Bypass",
-                PEFS: "PEFS No.",
-                Location: "Location",
-                TagNo: "Full Tag No"
-            },
+            // Headers
+            h_service: "Service Description",
+            h_action: "Failure Action",
+            h_handjack: "Hand Jack",
+            h_pefs: "PEFS No.",
+            h_location: "Location",
+            h_tag: "Tag No.",
+            // Values
+            actions: { FC: "Closes", FO: "Opens", FL: "Locks", "-": "N/A" },
             types: {
-                FV: "Flow Valve (FV)",
-                HV: "Hand Valve (HV)",
-                LV: "Level Valve (LV)",
-                PDV: "Pressure Diff. Valve (PDV)",
-                PV: "Pressure Valve (PV)",
-                TV: "Temperature Valve (TV)"
-            },
-            actions: {
-                FC: "Fail to Close",
-                FO: "Fail to Open",
-                FL: "Fail to Lock",
-                "-": "N/A"
+                FV: "Flow Valve",
+                HV: "Hand Valve",
+                LV: "Level Valve",
+                PDV: "Diff. Pressure Valve",
+                PV: "Pressure Valve",
+                TV: "Temp. Valve"
             }
         }
     };
 
-    // --- 2. قاعدة البيانات ---
-    // ملاحظة: الوصف الطويل (Service/Location) تركته انجليزي لأنه نص حر، بس الهيكل يدعم الترجمة.
+    // --- 2. البيانات الكاملة من الصورة (Database) ---
     const database = [
-        { type: "FV", fullTag: "01-FV-00001", data: { "Service": "RETURN OIL SLOPS TO CRUDE FEED PUMP", "Action": "FC", "HandJack": "YES", "PEFS": "J-001", "Location": "NEAR CRUDE FEED PUMP P-001A/B" } },
-        { type: "FV", fullTag: "01-FV-00002", data: { "Service": "CRUDE FEED FROM CRUDE FEED PUMP", "Action": "FC", "HandJack": "YES", "PEFS": "J-001", "Location": "NEAR DEMULSIFIER INJECTION PACKAGE" } },
-        { type: "FV", fullTag: "01-FV-00005", data: { "Service": "CRUDE FEED PUMP (P-0001) MIN FLOW", "Action": "FO", "HandJack": "YES", "PEFS": "J-001", "Location": "NEAR CRUDE FEED PUMP P-001A/B" } },
-        { type: "FV", fullTag: "01-FV-00021A", data: { "Service": "FLASHED CRUDE PASS 1 TO CRUDE HEATER", "Action": "FL", "HandJack": "YES", "PEFS": "J-015", "Location": "HEATER STRUCTURE NO.4 TOP FLOOR" } },
+        // FV Group
+        { t: "FV", n: "01-FV-00001",  act: "FC", hj: "YES", pefs: "J-001",     s_en: "RETURN OIL SLOPS TO CRUDE FEED PUMP P-001A/B", s_ar: "إرجاع رواسب الزيت إلى مضخة تلقيم الخام P-001A/B", l_en: "NEAR CRUDE FEED PUMP P-001A/B", l_ar: "بالقرب من مضخة تلقيم الخام P-001A/B" },
+        { t: "FV", n: "01-FV-00002",  act: "FC", hj: "YES", pefs: "J-001",     s_en: "CRUDE FEED FROM CRUDE FEED PUMP P-0001A/B", s_ar: "تغذية الخام من مضخة الخام P-0001A/B", l_en: "NEAR DEMULSIFIER INJECTION PACKAGE", l_ar: "بالقرب من وحدة حقن مزيل الاستحلاب" },
+        { t: "FV", n: "01-FV-00005",  act: "FO", hj: "YES", pefs: "J-001",     s_en: "CRUDE FEED PUMP (P-0001) MIN FLOW", s_ar: "التدفق الأدنى لمضخة تلقيم الخام (P-0001)", l_en: "NEAR CRUDE FEED PUMP P-001A/B", l_ar: "بالقرب من مضخة تلقيم الخام P-001A/B" },
+        { t: "FV", n: "01-FV-00006",  act: "FC", hj: "YES", pefs: "J-010-002", s_en: "P-0021 A/B MINIMUM FLOW BYPASS", s_ar: "تجاوز التدفق الأدنى للمضخة P-0021 A/B", l_en: "P-0021 A/B STRUCTURE FIRST FLOOR", l_ar: "هيكل المضخة P-0021 A/B - الطابق الأول" },
+        { t: "FV", n: "01-FV-00014",  act: "FC", hj: "NO",  pefs: "J-007-002", s_en: "EFFLUENT WATER FROM MUD WASH PUMPS", s_ar: "المياه العادمة من مضخات غسيل الطين", l_en: "NEAR PUMP P-0027A", l_ar: "بالقرب من المضخة P-0027A" },
+        { t: "FV", n: "01-FV-00021A", act: "FL", hj: "YES", pefs: "J-015",     s_en: "FLASHED CRUDE PASS 1 TO CRUDE HEATER", s_ar: "الخام الومضي (Pass 1) إلى سخان الخام", l_en: "HEATER STRUCTURE NO.4 TOP FLOOR", l_ar: "هيكل السخان رقم 4 - الطابق العلوي" },
+        { t: "FV", n: "01-FV-00021B", act: "FL", hj: "YES", pefs: "J-015",     s_en: "FLASHED CRUDE PASS 2 TO CRUDE HEATER", s_ar: "الخام الومضي (Pass 2) إلى سخان الخام", l_en: "HEATER STRUCTURE NO.4 TOP FLOOR", l_ar: "هيكل السخان رقم 4 - الطابق العلوي" },
+        { t: "FV", n: "01-FV-00021C", act: "FL", hj: "YES", pefs: "J-015",     s_en: "FLASHED CRUDE PASS 3 TO CRUDE HEATER", s_ar: "الخام الومضي (Pass 3) إلى سخان الخام", l_en: "HEATER STRUCTURE NO.4 TOP FLOOR", l_ar: "هيكل السخان رقم 4 - الطابق العلوي" },
+        { t: "FV", n: "01-FV-00021D", act: "FL", hj: "YES", pefs: "J-015",     s_en: "FLASHED CRUDE PASS 4 TO CRUDE HEATER", s_ar: "الخام الومضي (Pass 4) إلى سخان الخام", l_en: "HEATER STRUCTURE NO.4 TOP FLOOR", l_ar: "هيكل السخان رقم 4 - الطابق العلوي" },
+        { t: "FV", n: "01-FV-00021E", act: "FL", hj: "YES", pefs: "J-015",     s_en: "FLASHED CRUDE PASS 5 TO CRUDE HEATER", s_ar: "الخام الومضي (Pass 5) إلى سخان الخام", l_en: "HEATER STRUCTURE NO.4 TOP FLOOR", l_ar: "هيكل السخان رقم 4 - الطابق العلوي" },
+        { t: "FV", n: "01-FV-00021F", act: "FL", hj: "YES", pefs: "J-015",     s_en: "FLASHED CRUDE PASS 6 TO CRUDE HEATER", s_ar: "الخام الومضي (Pass 6) إلى سخان الخام", l_en: "HEATER STRUCTURE NO.4 TOP FLOOR", l_ar: "هيكل السخان رقم 4 - الطابق العلوي" },
+        { t: "FV", n: "01-FV-00021G", act: "FL", hj: "YES", pefs: "J-015",     s_en: "FLASHED CRUDE PASS 7 TO CRUDE HEATER", s_ar: "الخام الومضي (Pass 7) إلى سخان الخام", l_en: "HEATER STRUCTURE NO.4 TOP FLOOR", l_ar: "هيكل السخان رقم 4 - الطابق العلوي" },
+        { t: "FV", n: "01-FV-00021H", act: "FL", hj: "YES", pefs: "J-015",     s_en: "FLASHED CRUDE PASS 8 TO CRUDE HEATER", s_ar: "الخام الومضي (Pass 8) إلى سخان الخام", l_en: "HEATER STRUCTURE NO.4 TOP FLOOR", l_ar: "هيكل السخان رقم 4 - الطابق العلوي" },
+        { t: "FV", n: "01-FV-00022",  act: "FC", hj: "YES", pefs: "J-017",     s_en: "REFINERY FUEL GAS FROM DISTRIBUTION HEADER", s_ar: "غاز وقود المصفاة من مجمع التوزيع", l_en: "NEAR DECOKING DRUM (SOUTH SIDE)", l_ar: "قرب وعاء إزالة التفحم (الجانب الجنوبي)" },
+        { t: "FV", n: "01-FV-00023",  act: "FC", hj: "YES", pefs: "J-017",     s_en: "PLANT FUEL OIL SUPPLY FROM DISTRIBUTION HEADER", s_ar: "إمداد زيت وقود المصنع من مجمع التوزيع", l_en: "HEATER GROUND FLOOR (WEST SIDE)", l_ar: "السخان - الطابق الأرضي (الجانب الغربي)" },
+        { t: "FV", n: "01-FV-00026",  act: "FL", hj: "NO",  pefs: "J-019",     s_en: "INTAKE AIR TO COMBUSTION AIR BLOWER", s_ar: "سحب الهواء إلى منفاخ هواء الاحتراق", l_en: "FD FAN SUCTION LINE", l_ar: "خط سحب مروحة الدفع القسري (FD Fan)" },
+        { t: "FV", n: "01-FV-00027",  act: "FO", hj: "YES", pefs: "J-023",     s_en: "REFLUX TO CRUDE DISTILLATION COLUMN C-0001", s_ar: "الارتجاع (Reflux) إلى عمود تقطير الخام C-0001", l_en: "V-0004 STRUCTURE 8TH FLOOR", l_ar: "هيكل V-0004 الطابق الثامن" },
+        { t: "FV", n: "01-FV-00028",  act: "FO", hj: "YES", pefs: "J-023",     s_en: "MIDDLE PA TO CRUDE DISTILLATION COLUMN C-0001", s_ar: "Middle PA إلى عمود تقطير الخام C-0001", l_en: "V-0004 STRUCTURE 4TH FLOOR", l_ar: "هيكل V-0004 الطابق الرابع" },
+        { t: "FV", n: "01-FV-00029",  act: "FO", hj: "YES", pefs: "J-023",     s_en: "TOP PA TO CRUDE DISTILLATION COLUMN C-0001", s_ar: "Top PA إلى عمود تقطير الخام C-0001", l_en: "V-0004 STRUCTURE 6TH FLOOR", l_ar: "هيكل V-0004 الطابق السادس" },
+        { t: "FV", n: "01-FV-00030",  act: "FO", hj: "YES", pefs: "J-023",     s_en: "BOTTOM PA TO CRUDE DISTILLATION COLUMN C-0001", s_ar: "Bottom PA إلى عمود تقطير الخام C-0001", l_en: "V-0004 STRUCTURE 4TH FLOOR", l_ar: "هيكل V-0004 الطابق الرابع" },
+        { t: "FV", n: "01-FV-00031",  act: "FC", hj: "YES", pefs: "J-024",     s_en: "STRIPPING STM TO CRD DISTILLATION COLUMN C-0001", s_ar: "بخار التجريد إلى عمود تقطير الخام", l_en: "HEAVY DIESEL STREEPER GROUND FLOOR", l_ar: "وحدة تجريد الديزل الثقيل - الأرضي" },
+        { t: "FV", n: "01-FV-00032",  act: "FC", hj: "YES", pefs: "J-029",     s_en: "WASH WATER FROM SOUR WATER PUMP", s_ar: "مياه الغسيل من مضخة المياه الحمضية", l_en: "V-0004 STRUCTURE 6TH FLOOR", l_ar: "هيكل V-0004 الطابق السادس" },
+        { t: "FV", n: "01-FV-00036",  act: "FC", hj: "YES", pefs: "J-033",     s_en: "STRIP STEAM TO C-0003", s_ar: "بخار التجريد إلى C-0003", l_en: "V-0004 STRUCTURE 3RD FLOOR", l_ar: "هيكل V-0004 الطابق الثالث" },
+        { t: "FV", n: "01-FV-00037",  act: "FC", "hj": "YES", "pefs": "J-035", "s_en": "HEAVY DIESEL PRODUCT TO E-0008", "s_ar": "منتج الديزل الثقيل إلى E-0008", "l_en": "NEAR P-00118", "l_ar": "قرب P-00118" },
+        { t: "FV", n: "01-FV-00038",  act: "FO", "hj": "YES", "pefs": "J-038-002", "s_en": "UNSTABILIZD NAPHTHA TO NAPHTHA STABILIZER", "s_ar": "النافثا غير المستقرة إلى مثبت النافثا", "l_en": "NEAR P-0015A (SOUTH SIDE)", "l_ar": "قرب P-0015A (جنوب)" },
+        { t: "FV", n: "01-FV-00039",  act: "FC", "hj": "NO", "pefs": "J-040-002", "s_en": "SOUR LPG PRODUCT TO SGU", "s_ar": "منتج الغاز البترولي المسال الحامض إلى SGU", "l_en": "NEAR P-0016A (WEST SIDE)", "l_ar": "قرب P-0016A (غرب)" },
+        { t: "FV", n: "01-FV-00041",  act: "FC", "hj": "YES", "pefs": "J-010-001", "s_en": "STRIPPING STEAM TO PREHEATER E-0013C", "s_ar": "بخار التجريد إلى المسخن الأولي E-0013C", "l_en": "NEAR E-0013D", "l_ar": "قرب E-0013D" },
+        { t: "FV", n: "01-FV-00042",  act: "FC", "hj": "YES", "pefs": "J-010-003", "s_en": "STRIPPD SOUR WTR TO CRD FEED/OVHD EXCH", "s_ar": "المياه الحمضية المجردة إلى مبادل الخام", "l_en": "NORTH SIDE OF E-0013B", "l_ar": "شمال E-0013B" },
+        { t: "FV", n: "01-FV-00045",  act: "FO", "hj": "YES", "pefs": "J-041-002", "s_en": "ATM RESIDUE FROM RESIDUE EXCHANGER E-0006", "s_ar": "مخلفات التقطير الجوي من المبادل E-0006", "l_en": "NORTH SIDE OF V-0015", "l_ar": "شمال V-0015" },
+        { t: "FV", n: "01-FV-00054",  act: "FO", "hj": "YES", "pefs": "J-039-001", "s_en": "NAPHTHA STABILI REFLUX TO NAPHTHA STAB", "s_ar": "ارتجاع النافثا المثبتة إلى عمود التثبيت", "l_en": "STABILIZER COLUMN TOP FLOOR", "l_ar": "عمود التثبيت - الطابق العلوي" },
+        { t: "FV", n: "01-FV-00057",  act: "FO", "hj": "YES", "pefs": "J-039-001", "s_en": "STAB NAPHTHA PROD FM STAB NAPHTHA PMP", "s_ar": "منتج النافثا المثبتة من المضخة", "l_en": "STABILIZER STRUCTURE 1ST FLOOR", "l_ar": "هيكل المثبت - الطابق الأول" },
+        { t: "FV", n: "01-FV-00063",  act: "FC", "hj": "YES", "pefs": "J-034", "s_en": "HOT DIESEL PRODUCT TO DHT-03", "s_ar": "منتج الديزل الحار إلى DHT-03", "l_en": "NORTH SIDE OF E-0017", "l_ar": "شمال E-0017" },
+        { t: "FV", n: "01-FV-00064",  act: "FC", "hj": "YES", "pefs": "J-034", "s_en": "DSL PROD TO DIESEL PROD AIR COOLER E-0042A", "s_ar": "منتج الديزل إلى مبرد الهواء E-0042A", "l_en": "NORTH SIDE OF E-0017 IN RACK", "l_ar": "شمال E-0017 (في الراك)" },
+        { t: "FV", n: "01-FV-00073",  act: "FO", "hj": "YES", "pefs": "J-029-002", "s_en": "WASH WATER FROM SOUR WATER PUMP P-0008A/B", "s_ar": "مياه الغسيل من مضخة المياه الحمضية", "l_en": "V-0004 STRUCTURE 6TH FLOOR", "l_ar": "هيكل V-0004 الطابق السادس" },
+        { t: "FV", n: "01-FV-00100",  act: "FC", "hj": "YES", "pefs": "J-035", "s_en": "STRIPPING STRM TO HEAVY DIESEL STRIPPER", "s_ar": "بخار التجريد إلى مجرد الديزل الثقيل", "l_en": "HEAVY DIESEL STREEPER GROUND FLOOR", "l_ar": "مجرد الديزل الثقيل - الأرضي" },
+        { t: "FV", n: "01-FV-00102",  act: "FC", "hj": "YES", "pefs": "J-030", "s_en": "DISCHARGE OF PUMP 01-P-0007 A/B MIN FLOW", "s_ar": "تفريغ المضخة 01-P-0007 A/B (تدفق أدنى)", "l_en": "C-0002/3 STRUCTURE TOP FLOOR", "l_ar": "هيكل C-0002/3 الطابق العلوي" },
+        { t: "FV", n: "01-FV-00103",  act: "FC", "hj": "YES", "pefs": "J-033", "s_en": "LT DIESEL PRODUCT TO E-0008", "s_ar": "منتج الديزل الخفيف إلى E-0008", "l_en": "C-0002/3 STRUCTURE TOP FLOOR", "l_ar": "هيكل C-0002/3 الطابق العلوي" },
+        { t: "FV", n: "01-FV-00115",  act: "FO", "hj": "YES", "pefs": "J-039-001", "s_en": "BOT. PA BYPASS TO STABILIZER C-0005", "s_ar": "تجاوز (PA السفلي) إلى المثبت C-0005", "l_en": "NEAR NAPHTHA STABILIZER COLUMN", "l_ar": "قرب عمود تثبيت النافثا" },
+        { t: "FV", n: "01-FV-00116",  act: "FO", "hj": "YES", "pefs": "J-033", "s_en": "LT DIESEL PRODUCT TO 01-C-0003 BY PASS", "s_ar": "منتج الديزل الخفيف إلى C-0003 (تجاوز)", "l_en": "C-0002/3 STRUCTURE TOP FLOOR", "l_ar": "هيكل C-0002/3 الطابق العلوي" },
+        { t: "FV", n: "01-FV-00150",  act: "FC", "hj": "YES", "pefs": "J-041-002", "s_en": "COLD NAPHTHA PROD FM NAPHTHA PROD CLR", "s_ar": "منتج النافثا البارد من المبرد", "l_en": "NORTH SIDE OF E-0018", "l_ar": "شمال E-0018" },
+        { t: "FV", n: "01-FV-00180A", act: "FL", "hj": "YES", "pefs": "J-015", "s_en": "PRG STM TO XOVR SECTION CRD HEATER PASS 1", "s_ar": "بخار التطهير إلى سخان الخام (Pass 1)", "l_en": "HEATER STRUCTURE NO.4 TOP FLOOR", "l_ar": "هيكل السخان 4 الطابق العلوي" },
+        { t: "FV", n: "01-FV-00180B", act: "FL", "hj": "YES", "pefs": "J-015", "s_en": "PRG STM TO XOVR SECTION CRD HEATER PASS 2", "s_ar": "بخار التطهير إلى سخان الخام (Pass 2)", "l_en": "HEATER STRUCTURE NO.4 TOP FLOOR", "l_ar": "هيكل السخان 4 الطابق العلوي" },
+        { t: "FV", n: "01-FV-00180C", act: "FL", "hj": "YES", "pefs": "J-015", "s_en": "PRG STM TO XOVR SECTION CRD HEATER PASS 3", "s_ar": "بخار التطهير إلى سخان الخام (Pass 3)", "l_en": "HEATER STRUCTURE NO.4 TOP FLOOR", "l_ar": "هيكل السخان 4 الطابق العلوي" },
+        { t: "FV", n: "01-FV-00180D", act: "FL", "hj": "YES", "pefs": "J-015", "s_en": "PRG STM TO XOVR SECTION CRD HEATER PASS 4", "s_ar": "بخار التطهير إلى سخان الخام (Pass 4)", "l_en": "HEATER STRUCTURE NO.4 TOP FLOOR", "l_ar": "هيكل السخان 4 الطابق العلوي" },
+        { t: "FV", n: "01-FV-00180E", act: "FL", "hj": "YES", "pefs": "J-015", "s_en": "PRG STM TO XOVR SECTION CRD HEATER PASS 5", "s_ar": "بخار التطهير إلى سخان الخام (Pass 5)", "l_en": "HEATER STRUCTURE NO.4 TOP FLOOR", "l_ar": "هيكل السخان 4 الطابق العلوي" },
+        { t: "FV", n: "01-FV-00180F", act: "FL", "hj": "YES", "pefs": "J-015", "s_en": "PRG STM TO XOVR SECTION CRD HEATER PASS 6", "s_ar": "بخار التطهير إلى سخان الخام (Pass 6)", "l_en": "HEATER STRUCTURE NO.4 TOP FLOOR", "l_ar": "هيكل السخان 4 الطابق العلوي" },
+        { t: "FV", n: "01-FV-00180G", act: "FL", "hj": "YES", "pefs": "J-015", "s_en": "PRG STM TO XOVR SECTION CRD HEATER PASS 7", "s_ar": "بخار التطهير إلى سخان الخام (Pass 7)", "l_en": "HEATER STRUCTURE NO.4 TOP FLOOR", "l_ar": "هيكل السخان 4 الطابق العلوي" },
+        { t: "FV", n: "01-FV-00180H", act: "FL", "hj": "YES", "pefs": "J-015", "s_en": "PRG STM TO XOVR SECTION CRD HEATER PASS 8", "s_ar": "بخار التطهير إلى سخان الخام (Pass 8)", "l_en": "HEATER STRUCTURE NO.4 TOP FLOOR", "l_ar": "هيكل السخان 4 الطابق العلوي" },
+        { t: "FV", n: "01-FV-00200",  act: "FC", "hj": "YES", "pefs": "J-031-002", "s_en": "KEROSENE FROM STRIPPER TO FILTER 01-F-0004", "s_ar": "الكيروسين من المجرد إلى الفلتر", "l_en": "NEAR E-0006A/B (SOUTH SIDE)", "l_ar": "قرب E-0006A/B (جنوب)" },
         
-        { type: "HV", fullTag: "01-HV-00030", data: { "Service": "ATH RESIDUE BYPASS TO EXCHANGER", "Action": "FO", "HandJack": "YES", "PEFS": "J-009-001", "Location": "NORTH SIDE OF V-0001" } },
-        { type: "HV", fullTag: "01-HV-00125", data: { "Service": "DIESEL PRODUCT AIR COOLER", "Action": "-", "HandJack": "NO", "PEFS": "J-014-003", "Location": "NEAR E-0012E/F (SOUTH SIDE)" } },
+        // HV Group
+        { t: "HV", n: "01-HV-00022",  act: "FO", "hj": "YES", "pefs": "J-009-001", "s_en": "DESALTED CRUDE FROM 2ND STAGE DESALTER", "s_ar": "خام خالي من الأملاح من المرحلة الثانية", "l_en": "NORTH SIDE OF V-0001", "l_ar": "شمال V-0001" },
+        { t: "HV", n: "01-HV-00030",  act: "FO", "hj": "YES", "pefs": "J-009-001", "s_en": "ATH RESIDUE BYPASS TO EXCHANGER E-0012", "s_ar": "تجاوز مخلفات التقطير إلى المبادل E-0012", "l_en": "NEAR E-0012E/F (SOUTH SIDE)", "l_ar": "قرب E-0012E/F (جنوب)" },
+        { t: "HV", n: "01-HV-00125",  act: "-", "hj": "NO",  "pefs": "J-014-003", "s_en": "DIESEL PRODUCT AIR COOLER 01-E-0042A", "s_ar": "مبرد هواء الديزل 01-E-0042A", "l_en": "FIN FAN STRUCTURE NEAR E-0042", "l_ar": "هيكل المروحة قرب E-0042" },
+        { t: "HV", n: "01-HV-00126",  act: "-", "hj": "NO",  "pefs": "J-034", "s_en": "DIESEL PRODUCT AIR COOLER 01-E-0042A", "s_ar": "مبرد هواء الديزل 01-E-0042A", "l_en": "FIN FAN STRUCTURE NEAR E-0042", "l_ar": "هيكل المروحة قرب E-0042" },
+        { t: "HV", n: "01-HV-00230",  act: "-", "hj": "NO",  "pefs": "J-002-002", "s_en": "CRUDE FEED FROM CRUDE FEED PUMP", "s_ar": "تغذية الخام من مضخة الخام", "l_en": "V-0004 STRUCTURE 5TH FLOOR", "l_ar": "هيكل V-0004 الطابق الخامس" },
 
-        { type: "LV", fullTag: "01-LV-00005", data: { "Service": "WASH WATER FM DESALTER WASH WATER PUMP", "Action": "FC", "HandJack": "YES", "PEFS": "J-005", "Location": "NEAR P-0014A" } },
-        
-        { type: "PDV", fullTag: "01-PDV-00037", data: { "Service": "CRT FEED TO 1ST STG DSLTR STATIC MXR", "Action": "FC", "HandJack": "NO", "PEFS": "J-007-001", "Location": "BETWEEN V-0001 & V-0002" } },
-        
-        { type: "PV", fullTag: "01-PV-00006", data: { "Service": "PREFLASH VAPOR FROM CRUDE PREFLASH DRUM", "Action": "FC", "HandJack": "YES", "PEFS": "J-013-001", "Location": "FINFAN STRUCTURE MIDDLE" } },
-        
-        { type: "TV", fullTag: "01-TV-00367", data: { "Service": "AR RYP FR CRD / AR EXCHANGER", "Action": "FC", "HandJack": "NO", "PEFS": "J-054-009", "Location": "NEAR P-00128" } }
+        // LV Group
+        { t: "LV", n: "01-LV-00002",  act: "-", "hj": "NO",  "pefs": "J-002-002", "s_en": "EFL WTR TO DESALTER EFL WTR FLASH DRUM", "s_ar": "المياه العادمة إلى وعاء الوميض", "l_en": "NEAR P-0014A", "l_ar": "قرب P-0014A" },
+        { t: "LV", n: "01-LV-00005",  act: "FC", "hj": "YES", "pefs": "J-005", "s_en": "WASH WATER FM DESALTER WASH WATER PUMP", "s_ar": "مياه الغسيل من مضخة غسيل الأملاح", "l_en": "BETWEEN V-0001 & V-0002", "l_ar": "بين V-0001 و V-0002" },
+        { t: "LV", n: "01-LV-00018",  act: "FC", "hj": "YES", "pefs": "J-029-002", "s_en": "SOUR WATER TO SOUR WATER STRIPPER", "s_ar": "المياه الحمضية إلى مجرد المياه", "l_en": "NEAR P-0008B", "l_ar": "قرب P-0008B" },
+        { t: "LV", n: "01-LV-00019",  act: "FC", "hj": "YES", "pefs": "J-031-001", "s_en": "KEROSENE TO KEROSENE STRIPPER", "s_ar": "الكيروسين إلى مجرد الكيروسين", "l_en": "V-0004 STRUCTURE 2ND FLOOR", "l_ar": "هيكل V-0004 الطابق الثاني" },
+        { t: "LV", n: "01-LV-00021",  act: "FC", "hj": "YES", "pefs": "J-033", "s_en": "LIGHT DIESEL TO LIGHT DIESEL STRIPPER", "s_ar": "الديزل الخفيف إلى مجرد الديزل", "l_en": "V-0004 STRUCTURE 4TH FLOOR", "l_ar": "هيكل V-0004 الطابق الرابع" },
+        { t: "LV", n: "01-LV-00023",  act: "FC", "hj": "YES", "pefs": "J-034", "s_en": "HEAVY DIESEL TO HEAVY DIESEL STRIPPER", "s_ar": "الديزل الثقيل إلى مجرد الديزل", "l_en": "V-0001 COLUMN STRUCTURE", "l_ar": "هيكل العمود V-0001" },
+        { t: "LV", n: "01-LV-00030",  act: "FO", "hj": "YES", "pefs": "J-040-001", "s_en": "SOR WATER FROM STAB OVERHD ACCUMULATOR", "s_ar": "المياه الحامضة من مجمع المثبت العلوي", "l_en": "STABILIZER STRUCTURE 1ST FLOOR", "l_ar": "هيكل المثبت - الطابق الأول" },
+        { t: "LV", n: "01-LV-00048",  act: "FO", "hj": "YES", "pefs": "J-010-001", "s_en": "DESALTR EFL WTR FR DESALTR EFL AIR CLR", "s_ar": "مياه عادمة من مبرد هواء مزيل الأملاح", "l_en": "FINFAN STRUCTURE WEST SIDE", "l_ar": "هيكل المروحة (غرب)" },
+        { t: "LV", n: "01-LV-00061",  act: "FC", "hj": "YES", "pefs": "J-010-002", "s_ar": "مياه عادمة من مضخة المياه الحمضية", s_en: "EFLUENT WATER TO COMP SOUR WTR DRUM", l_en: "P-0021 A/B STRUCTURE FIRST FLOOR", l_ar: "هيكل المضخة P-0021 الطابق الأول" },
+        { t: "LV", n: "01-LV-00134",  act: "FC", "hj": "YES", "pefs": "J-024", "s_en": "BPA PUMPDOWN TO CRUDE DISTILLATION COLUMN", "s_ar": "ضخ BPA لأسفل إلى عمود التقطير", "l_en": "V-0004 STRUCTURE 4TH FLOOR", "l_ar": "هيكل V-0004 الطابق الرابع" },
+
+        // PDV Group
+        { t: "PDV", n: "01-PDV-00037", act: "FC", "hj": "NO", "pefs": "J-007-001", "s_en": "CRD FEED TO 1ST STG DSLTR STATIC MXR", "s_ar": "تغذية الخام إلى خلاط المرحلة الأولى", "l_en": "BETWEEN V-0001 & V-0002", "l_ar": "بين V-0001 و V-0002" },
+        { t: "PDV", n: "01-PDV-00086", act: "FO", "hj": "YES", "pefs": "J-017", "s_en": "NTRMDTE PRESSURE STEAM FROM DISTRIBUTION HEADER", "s_ar": "بخار ضغط متوسط من مجمع التوزيع", "l_en": "HEATER GROUND FLOOR (WEST)", "l_ar": "السخان - الأرضي (غرب)" },
+        { t: "PDV", n: "01-PDV-00107", act: "FO", "hj": "NO", "pefs": "J-009-001", "s_en": "CRD FEED TO 2ND STG DSLTR STATIC MXR", "s_ar": "تغذية الخام إلى خلاط المرحلة الثانية", "l_en": "BETWEEN V-0001 & V-0002", "l_ar": "بين V-0001 و V-0002" },
+
+        // PV Group
+        { t: "PV", n: "01-PV-00006",  act: "FC", "hj": "YES", "pefs": "J-013-001", "s_en": "PREFLASH VAPOR FROM CRUDE PREFLASH DRUM", "s_ar": "أبخرة الوميض الأولي من الوعاء", "l_en": "FINFAN STRUCTURE MIDDLE", "l_ar": "هيكل المروحة (وسط)" },
+        { t: "PV", n: "01-PV-00020",  act: "FO", "hj": "NO",  "pefs": "J-019", "s_en": "ON CRUDE HEATER F-0001", "s_ar": "على سخان الخام F-0001", "l_en": "HEATER STACK", "l_ar": "مدخنة السخان" },
+        { t: "PV", n: "01-PV-00092A", act: "FL", "hj": "NO",  "pefs": "J-019", "s_en": "REFINERY FG TO CRD OVERHEAD ACCUM", "s_ar": "غاز الوقود إلى المجمع العلوي", "l_en": "ID FAN SUCTION LINE", "l_ar": "خط سحب مروحة ID" },
+        { t: "PV", n: "01-PV-00112A", act: "FC", "hj": "YES", "pefs": "J-029-001", "s_en": "REFINERY FG TO CRD OVERHEAD ACCUM V-0004", "s_ar": "غاز الوقود إلى المجمع العلوي V-0004", "l_en": "V-0004 STRUCTURE 2ND FLOOR", "l_ar": "هيكل V-0004 الطابق الثاني" },
+        { t: "PV", n: "01-PV-00112B", act: "FC", "hj": "YES", "pefs": "J-029-001", "s_en": "OFF GAS FROM CRD COL OVERHEAD ACCUM V-0004", "s_ar": "الغازات المنبعثة من المجمع العلوي", "l_en": "V-0004 STRUCTURE 3RD FLOOR", "l_ar": "هيكل V-0004 الطابق الثالث" },
+        { t: "PV", n: "01-PV-00121",  act: "FC", "hj": "YES", "pefs": "J-032", "s_en": "KEROSENE PRODUCT TO KHT-25", "s_ar": "منتج الكيروسين إلى KHT-25", "l_en": "B/L SOUTH SIDE", "l_ar": "الجانب الجنوبي B/L" },
+        { t: "PV", n: "01-PV-00122",  act: "FC", "hj": "YES", "pefs": "J-032", "s_en": "KEROSENE PRODUCT TO KHT-25", "s_ar": "منتج الكيروسين إلى KHT-25", "l_en": "B/L SOUTH SIDE", "l_ar": "الجانب الجنوبي B/L" },
+        { t: "PV", n: "01-PV-00148A", act: "FC", "hj": "YES", "pefs": "J-036", "s_en": "REFINERY FG TO OFFGAS COMP SUCT DRUM", "s_ar": "غاز الوقود إلى وعاء سحب الضاغط", "l_en": "V-0005 STRUCTURE TOP FLOOR", "l_ar": "هيكل V-0005 الطابق العلوي" },
+        { t: "PV", n: "01-PV-00156",  act: "FC", "hj": "NO",  "pefs": "J-040-001", "s_en": "OVERHEAD FROM NAPHTHA STABILIZER C-0005", "s_ar": "المنتج العلوي من مثبت النافثا", "l_en": "STABILIZER STRUCTURE TOP FLOOR", "l_ar": "هيكل المثبت - الطابق العلوي" },
+        { t: "PV", n: "01-PV-00159",  act: "FC", "hj": "NO",  "pefs": "J-040-001", "s_en": "OVERHEAD FROM NAPHTHA STABILIZER C-0005", "s_ar": "المنتج العلوي من مثبت النافثا", "l_en": "STABILIZER STRUCTURE TOP FLOOR", "l_ar": "هيكل المثبت - الطابق العلوي" },
+        { t: "PV", n: "01-PV-00163A", act: "FC", "hj": "NO",  "pefs": "J-040-001", "s_en": "MP OFFGAS FROM STAB OVERHD ACCUM", "s_ar": "غازات MP من المجمع العلوي", "l_en": "STABILIZER STRUCTURE TOP FLOOR", "l_ar": "هيكل المثبت - الطابق العلوي" },
+        { t: "PV", n: "01-PV-00163B", act: "FC", "hj": "NO",  "pefs": "J-040-001", "s_en": "FLARE LOW PRESSURE FM STAB OVHD ACCUM", "s_ar": "مشعل ضغط منخفض من المجمع العلوي", "l_en": "NEAR COOLER E-0022", "l_ar": "قرب المبرد E-0022" },
+        { t: "PV", n: "01-PV-00188",  act: "FC", "hj": "YES", "pefs": "J-041-001", "s_en": "HOT NAPHTHA PRODUCT TO NHT-14", "s_ar": "منتج النافثا الحار إلى NHT-14", "l_en": "01MPR-05 28XA (RACK NORTH)", "l_ar": "الراك الشمالي" },
+        { t: "PV", n: "01-PV-00189",  act: "FC", "hj": "YES", "pefs": "J-041-001", "s_en": "HOT NAPHTHA PRODUCT TO NHT-14", "s_ar": "منتج النافثا الحار إلى NHT-14", "l_en": "01MPR-05 28XA (RACK NORTH)", "l_ar": "الراك الشمالي" },
+        { t: "PV", n: "01-PV-00232",  act: "FO", "hj": "YES", "pefs": "J-010-002", "s_en": "FLASHED VAPOUR FROM DESALTER EFL WTR", "s_ar": "أبخرة ومضية من مياه مزيل الأملاح", "l_en": "NEAR P-0014A", "l_ar": "قرب P-0014A" },
+        { t: "PV", n: "01-PV-00311",  act: "FO", "hj": "YES", "pefs": "J-036", "s_en": "FLR LOW PRESS FM OFFGAS COMP SUCT DRUM", "s_ar": "مشعل ضغط منخفض من وعاء الضاغط", "l_en": "NEAR FLARE KO DRUM PUMP", "l_ar": "قرب مضخة وعاء المشعل" },
+        { t: "PV", n: "01-PV-00398",  act: "FC", "hj": "YES", "pefs": "J-010-002", "s_en": "NITROGEN TO STRIPPED SOUR WATER DRUM", "s_ar": "نيتروجين إلى وعاء المياه الحمضية", "l_en": "V-0016 STRUCTURE TOP FLOOR", "l_ar": "هيكل V-0016 الطابق العلوي" },
+        { t: "PV", n: "01-PV-00367",  act: "FC", "hj": "NO",  "pefs": "J-054-009", "s_en": "LP OFFGAS TO SGU", "s_ar": "غازات LP إلى SGU", "l_en": "NEAR P-00128", "l_ar": "قرب P-00128" },
+
+        // TV Group
+        { t: "TV", n: "01-TV-00050",  act: "FC", "hj": "YES", "pefs": "J-014-001", "s_en": "AR RYP FR CRD / AR EXCHANGER E-0010A/B/C/D", "s_ar": "تبادل حراري للخام / مبادل E-0010", "l_en": "V-0003 GROUND FLOOR", "l_ar": "V-0003 الأرضي" },
+        { t: "TV", n: "01-TV-00061",  act: "FC", "hj": "YES", "pefs": "J-015", "s_en": "BOTTOM PA FROM BOTTOMS PUMPAROUND PUMP", "s_ar": "Bottom PA من مضخة التدوير السفلية", "l_en": "NEAR FD FAN MOTOR", "l_ar": "قرب محرك مروحة FD" },
+        { t: "TV", n: "01-TV-00064",  act: "FC", "hj": "YES", "pefs": "J-019", "s_en": "COMBSN AIR FROM COMB AIR BLOWER", "s_ar": "هواء الاحتراق من المنفاخ", "l_en": "HEATER GROUND FLOOR (WEST)", "l_ar": "السخان - الأرضي (غرب)" },
+        { t: "TV", n: "01-TV-00085",  act: "FO", "hj": "YES", "pefs": "J-022-002", "s_en": "LP BFW TO STRIPPING STEAM SUPERHEATER", "s_ar": "مياه تغذية الغلاية إلى محمص البخار", "l_en": "V-0004 STRUCTURE 4TH FLOOR", "l_ar": "هيكل V-0004 الطابق الرابع" },
+        { t: "TV", n: "01-TV-00088",  act: "FC", "hj": "YES", "pefs": "J-021-001", "s_en": "COMBSN AIR FROM COMBSN AIR PREHEATER", "s_ar": "هواء الاحتراق من المسخن الأولي", "l_en": "V-0004 STRUCTURE 1ST FLOOR", "l_ar": "هيكل V-0004 الطابق الأول" },
+        { t: "TV", n: "01-TV-00091",  act: "FC", "hj": "YES", "pefs": "J-021-002", "s_en": "TOP PA BYPASS TO CRD DISTILLATION COLUMN", "s_ar": "تجاوز (Top PA) إلى عمود التقطير", "l_en": "NEAR P-0003A/C (SOUTH SIDE)", "l_ar": "قرب P-0003A/C (جنوب)" },
+        { t: "TV", n: "01-TV-00093",  act: "FC", "hj": "YES", "pefs": "J-022-002", "s_en": "MIDDLE PA BYPASS TO CRD DIST COLUMN", "s_ar": "تجاوز (Middle PA) إلى عمود التقطير", "l_en": "V-0004 STRUCTURE 4TH FLOOR", "l_ar": "هيكل V-0004 الطابق الرابع" },
+        { t: "TV", n: "01-TV-00095",  act: "FC", "hj": "YES", "pefs": "J-031-001", "s_en": "BOT PA BYPASS TO CRD DISTILLATION COLUMN", "s_ar": "تجاوز (Bot PA) إلى عمود التقطير", "l_en": "NEAR P-0009A (SOUTH SIDE)", "l_ar": "قرب P-0009A (جنوب)" },
+        { t: "TV", n: "01-TV-00096",  act: "FC", "hj": "YES", "pefs": "J-005", "s_en": "ATM RESID TO KEROS STRIPPER REBOILR BYPASS", "s_ar": "تجاوز مخلفات التقطير إلى غلاية الكيروسين", "l_en": "NEAR E-0006A/B (WEST SIDE)", "l_ar": "قرب E-0006A/B (غرب)" },
+        { t: "TV", n: "01-TV-00127",  act: "FC", "hj": "YES", "pefs": "3004", "s_en": "ATM RESID BYP FM CRD / ATM RESID EXCH", "s_ar": "تجاوز مخلفات التقطير من المبادل", "l_en": "01MPR-05 28XA (RACK NORTH)", "l_ar": "الراك الشمالي" },
+        { t: "TV", n: "01-TV-00128",  act: "FC", "hj": "YES", "pefs": "3004", "s_en": "KEROS PROD BYP FM CRD /KEROS PROD EXCH", "s_ar": "تجاوز منتج الكيروسين من المبادل", "l_en": "SOUTH SIDE OF E-0010A/B", "l_ar": "جنوب E-0010A/B" },
+        { t: "TV", n: "01-TV-00129",  act: "FC", "hj": "YES", "pefs": "3004", "s_en": "DSL PROD BYP FM CRD FEED/DSL PROD EXCH", "s_ar": "تجاوز منتج الديزل من المبادل", "l_en": "BETWEEN P-0012A/B", "l_ar": "بين P-0012A/B" },
+        { t: "TV", n: "01-TV-00340",  act: "FC", "hj": "YES", "pefs": "J-060", "s_en": "BOILER FEED WATER TO IP STM DESHUPTR", "s_ar": "مياه الغلاية إلى مبرد البخار IP", "l_en": "COMPRESSOR K-0001 SHED", "l_ar": "سقيفة الضاغط K-0001" },
+        { t: "TV", n: "01-TV-00418",  act: "FC", "hj": "NO",  "pefs": "J-012-001", "s_en": "CRD/ATM RESIDUE FEED/ATM RESIDUE EXCH", "s_ar": "تغذية الخام/مخلفات التقطير للمبادل", "l_en": "SOUTH SIDE OF E-0008A/B", "l_ar": "جنوب E-0008A/B" },
+        { t: "TV", n: "01-TV-00518",  act: "FC", "hj": "YES", "pefs": "J-070", "s_en": "OFF GAS COMPRESSOR 01-K-0001 (LUBE OIL)", "s_ar": "ضاغط الغازات المنبعثة (زيت التزييت)", "l_en": "COMPRESSOR K-0001 SHED", "l_ar": "سقيفة الضاغط K-0001" },
+        { t: "TV", n: "01-TV-00527",  act: "FC", "hj": "YES", "pefs": "J-075", "s_en": "OFF GAS COMPRESSOR (CCW CONSOLE)", "s_ar": "ضاغط الغازات المنبعثة (منصة CCW)", "l_en": "COMPRESSOR K-0001 SHED", "l_ar": "سقيفة الضاغط K-0001" }
     ];
 
-    // --- 3. إدارة الحالة (State Management) ---
+    // --- 3. المنطق البرمجي (Application Logic) ---
+    
     let currentLang = localStorage.getItem('lang') || (navigator.language.startsWith('ar') ? 'ar' : 'en');
     
-    // تهيئة الصفحة
     document.addEventListener('DOMContentLoaded', () => {
         applyLanguage(currentLang);
         populateTypes();
     });
 
-    // دالة تبديل اللغة
     function toggleLang() {
         currentLang = currentLang === 'ar' ? 'en' : 'ar';
         localStorage.setItem('lang', currentLang);
         applyLanguage(currentLang);
-        // إعادة رسم البيانات إذا كانت معروضة لتحديث الترجمة
         populateTypes();
         if(document.getElementById('controlNumber').value) showData();
     }
 
-    // تطبيق اللغة على النصوص
     function applyLanguage(lang) {
         document.documentElement.lang = lang;
         document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
         
-        // تحديث النصوص الثابتة
         document.querySelectorAll('[data-key]').forEach(el => {
             el.textContent = translations[lang][el.getAttribute('data-key')];
         });
-        
         document.getElementById('langBtn').textContent = translations[lang].langBtn;
     }
 
-    // --- 4. منطق النظام (Business Logic) ---
-
-    // استخراج الرقم النظيف (Smart Number Parser)
     function getCleanNumber(fullTag) {
-        // يأخذ الجزء الأخير بعد الشرطة، ويحذف الأصفار اللي بالبداية
-        // 01-FV-00021A -> 00021A -> 21A
         const parts = fullTag.split('-');
         const lastPart = parts[parts.length - 1];
         return lastPart.replace(/^0+/, '');
@@ -239,19 +311,23 @@
     const placeholder = document.getElementById('placeholder');
 
     function populateTypes() {
-        const selectedValue = typeSelect.value; // حفظ القيمة الحالية
+        const selectedValue = typeSelect.value;
         typeSelect.innerHTML = `<option value="">${translations[currentLang].optSelect}</option>`;
         
-        const types = [...new Set(database.map(item => item.type))].sort();
+        const types = [...new Set(database.map(item => item.t))].sort();
         
         types.forEach(type => {
             const option = document.createElement('option');
             option.value = type;
-            option.textContent = translations[currentLang].types[type] || type;
+            // التنسيق الجديد: FV - صمام تدفق
+            const label = currentLang === 'ar' 
+                ? `${type} - ${translations.ar.types[type]}`
+                : `${type} - ${translations.en.types[type]}`;
+            option.textContent = label;
             typeSelect.appendChild(option);
         });
         
-        typeSelect.value = selectedValue; // استرجاع الاختيار
+        typeSelect.value = selectedValue;
     }
 
     function populateNumbers() {
@@ -262,17 +338,16 @@
         placeholder.style.display = "block";
 
         if (selectedType) {
-            const filteredItems = database.filter(item => item.type === selectedType);
+            const filteredItems = database.filter(item => item.t === selectedType);
             
-            // ترتيب الأرقام منطقياً (Numeric Sort)
             filteredItems.sort((a, b) => {
-                return getCleanNumber(a.fullTag).localeCompare(getCleanNumber(b.fullTag), undefined, {numeric: true});
+                return getCleanNumber(a.n).localeCompare(getCleanNumber(b.n), undefined, {numeric: true});
             });
 
             filteredItems.forEach(item => {
                 const option = document.createElement('option');
-                option.value = item.fullTag; // القيمة الخلفية هي التاق الكامل
-                option.textContent = getCleanNumber(item.fullTag); // المعروض هو الرقم المختصر
+                option.value = item.n;
+                option.textContent = getCleanNumber(item.n);
                 numSelect.appendChild(option);
             });
             numSelect.disabled = false;
@@ -284,39 +359,29 @@
         tableBody.innerHTML = "";
 
         if (selectedTag) {
-            const record = database.find(item => item.fullTag === selectedTag);
+            const record = database.find(item => item.n === selectedTag);
             
             if (record) {
-                const t = translations[currentLang]; // اختصار للترجمة الحالية
+                const t = translations[currentLang];
+                const isAr = currentLang === 'ar';
                 
-                // تعريف الحقول وترتيب عرضها
-                const fieldsToShow = [
-                    { key: 'Service', label: t.fields.Service },
-                    { key: 'Action', label: t.fields.Action, transform: (val) => t.actions[val] || val },
-                    { key: 'HandJack', label: t.fields.HandJack },
-                    { key: 'PEFS', label: t.fields.PEFS },
-                    { key: 'Location', label: t.fields.Location }
+                // تعريف الصفوف (العناوين تأتي من اللغة المحددة فقط)
+                const rows = [
+                    { label: t.h_tag, value: `<span class="tag-badge">${record.n}</span>` },
+                    { label: t.h_service, value: isAr ? record.s_ar : record.s_en },
+                    { label: t.h_action, value: t.actions[record.act] || record.act }, // ترجمة الحالة (يغلق/يفتح)
+                    { label: t.h_handjack, value: record.hj },
+                    { label: t.h_pefs, value: record.pefs },
+                    { label: t.h_location, value: '📍 ' + (isAr ? record.l_ar : record.l_en) }
                 ];
 
-                // إضافة التاق الكامل أول شي
-                const tagRow = `
-                    <tr>
-                        <th>${t.fields.TagNo}</th>
-                        <td><span class="tag-badge">${record.fullTag}</span></td>
-                    </tr>
-                `;
-                tableBody.innerHTML += tagRow;
-
-                fieldsToShow.forEach(field => {
-                    let value = record.data[field.key];
-                    if (field.transform) {
-                        value = field.transform(value);
-                    }
-                    // إضافة أيقونة للموقع
-                    if (field.key === 'Location') value = '📍 ' + value;
-
-                    const row = `<tr><th>${field.label}</th><td>${value}</td></tr>`;
-                    tableBody.innerHTML += row;
+                rows.forEach(row => {
+                    const tr = `
+                        <tr>
+                            <th>${row.label}</th>
+                            <td>${row.value}</td>
+                        </tr>`;
+                    tableBody.innerHTML += tr;
                 });
 
                 table.style.display = "table";
