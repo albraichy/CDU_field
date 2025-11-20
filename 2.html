@@ -17,7 +17,7 @@
             --kipic-green: #6FAE27;      
             --kipic-gradient: linear-gradient(135deg, var(--kipic-navy) 60%, #004494 100%);
 
-            /* Light Mode Palette */
+            /* Light Mode */
             --bg-body: #f3f5f8;
             --bg-card: #ffffff;
             --text-main: #2c3e50;
@@ -25,47 +25,45 @@
             --border-color: #e9ecef;
             --header-text: #ffffff;
             
-            /* Table & Inputs - Light */
+            /* Table & Inputs */
             --table-label-bg: #f8f9fa;    
             --table-label-text: #495057;
             --table-val-bg: #ffffff;     
             --input-bg: #ffffff;
-            --input-group-text-bg: #ffffff;
             --input-border: #ced4da;
             --footer-bg: #e9ecef;
             
-            /* Accents */
-            --badge-bg: var(--kipic-navy);
-            --badge-text: #ffffff;
+            /* Status Colors */
             --status-ok: #198754;
             --status-no: #dc3545;
+            --badge-bg: var(--kipic-navy);
+            --badge-text: #ffffff;
         }
 
         [data-theme="dark"] {
-            /* Dark Mode Palette */
+            /* Dark Mode */
             --bg-body: #121212;
             --bg-card: #1e1e24;
             --text-main: #e0e0e0;
-            --text-muted: #adb5bd; /* Lighter mute for visibility */
+            --text-muted: #a0a0a0;
             --border-color: #343a40;
             --header-text: #e0e0e0;
             
             /* Table & Inputs - Dark */
-            --table-label-bg: #252530; /* Fixed: Darker background for labels */   
+            --table-label-bg: #252530;   
             --table-label-text: #ced4da;
             --table-val-bg: #1e1e24;     
             
             --input-bg: #2b2b36;
-            --input-group-text-bg: #2b2b36;
             --input-border: #495057;
             --footer-bg: #1a1a1a;
             
-            /* Dark Mode Overrides */
+            /* Overrides */
             --kipic-navy: #0d1b2a; 
             --kipic-green: #7bc938;
             --badge-bg: var(--kipic-green);
             --badge-text: #000000;
-
+            
             --status-ok: #2ecc71;
             --status-no: #e74c3c;
         }
@@ -106,7 +104,6 @@
             color: #d1e7dd; 
         }
 
-        /* Icons & Controls */
         .header-controls {
             position: absolute;
             top: 50%;
@@ -169,10 +166,9 @@
             transition: transform 0.3s ease;
             z-index: 1;
         }
-        
         .lang-switch-container.ar-active .lang-slider { transform: translateX(92%); }
 
-        /* --- CARDS & LAYOUT --- */
+        /* --- CARDS --- */
         .card {
             background-color: var(--bg-card);
             border: none;
@@ -202,33 +198,31 @@
         }
         [data-theme="dark"] .card-title-text { color: var(--kipic-green); }
 
-        /* --- FORMS & INPUTS (FIXED) --- */
+        /* --- FORMS (Simplified) --- */
         .form-label { 
             color: var(--text-muted); 
-            font-size: 0.75rem; 
+            font-size: 0.8rem; 
             font-weight: 700; 
-            text-transform: uppercase; 
-            letter-spacing: 0.5px; 
-            margin-bottom: 6px; 
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px; /* Space between icon and text */
         }
         
-        /* Fix for jagged edges: Input group items match background/border */
-        .input-group-text {
-            background-color: var(--input-group-text-bg);
-            border-color: var(--input-border);
-            color: var(--text-muted);
-            transition: background-color 0.3s, border-color 0.3s;
+        .label-icon {
+            color: var(--kipic-green);
+            font-size: 1.1rem;
         }
-        
+
         .form-select {
             background-color: var(--input-bg);
             color: var(--text-main);
             border: 1px solid var(--input-border);
-            padding: 8px 12px;
+            padding: 10px 12px;
             border-radius: 8px;
-            font-size: 0.9rem;
-            height: 42px;
-            transition: background-color 0.3s, border-color 0.3s;
+            font-size: 0.95rem;
+            height: 46px; /* Taller for better touch */
+            transition: all 0.3s;
         }
         
         .form-select:focus {
@@ -236,38 +230,26 @@
             box-shadow: 0 0 0 3px rgba(111, 174, 39, 0.15);
         }
         
-        /* Fix for white background on disabled inputs in Dark Mode */
         .form-select:disabled {
-            background-color: var(--bg-body); /* Slightly darker than input-bg to show disabled state */
+            background-color: var(--bg-body);
             color: var(--text-muted);
+            opacity: 0.6;
             border-color: var(--border-color);
-            opacity: 0.7;
         }
 
-        /* RTL Padding Adjustment */
-        [dir="rtl"] .form-select { 
-            background-position: left 0.75rem center; 
-            padding-right: 0.75rem; 
-            padding-left: 2.25rem; 
-        }
+        [dir="rtl"] .form-select { background-position: left 0.75rem center; }
 
-        /* --- DATA TABLE (FIXED) --- */
-        .table { 
-            margin-bottom: 0; 
-            border-color: var(--border-color); 
-            color: var(--text-main); 
-        }
+        /* --- TABLE --- */
+        .table { margin-bottom: 0; border-color: var(--border-color); color: var(--text-main); }
         
-        /* Fix: Specifically target TH inside TBODY to fix bright white issue */
         .table tbody th {
             background-color: var(--table-label-bg);
             color: var(--table-label-text);
             font-weight: 600;
             font-size: 0.85rem;
-            text-transform: uppercase;
             padding: 14px 15px;
             border-bottom: 1px solid var(--border-color);
-            width: 35%; /* Fixed width for label column */
+            width: 35%;
             vertical-align: middle;
         }
 
@@ -281,7 +263,6 @@
             font-weight: 500;
         }
 
-        /* --- BADGES & ICONS --- */
         .tag-badge {
             background-color: var(--badge-bg);
             color: var(--badge-text);
@@ -292,9 +273,11 @@
             letter-spacing: 1px;
         }
 
-        .status-icon { font-size: 1.2rem; vertical-align: middle; margin-inline-end: 6px; }
-        .text-ok { color: var(--status-ok) !important; }
-        .text-no { color: var(--status-no) !important; }
+        /* Large standalone status icons */
+        .status-icon-only {
+            font-size: 1.5rem;
+            line-height: 1;
+        }
 
         .no-data {
             text-align: center;
@@ -303,7 +286,7 @@
             font-style: italic;
         }
 
-        /* --- FOOTER & RESPONSIVE --- */
+        /* --- FOOTER & MOBILE --- */
         .site-footer {
             margin-top: auto;
             background-color: var(--footer-bg);
@@ -353,17 +336,18 @@
     <div class="card p-3 p-md-4">
         <div class="row g-3 align-items-end justify-content-center">
             <div class="col-md-5">
-                <label class="form-label" data-i18n="lblType">Valve Type</label>
-                <div class="input-group">
-                    <span class="input-group-text border-end-0"><i class="bi bi-funnel"></i></span>
-                    <select class="form-select border-start-0 ps-0" id="controlType" onchange="populateNumbers()"></select>
-                </div>
+                <label class="form-label">
+                    <i class="bi bi-funnel label-icon"></i> 
+                    <span data-i18n="lblType">Valve Type</span>
+                </label>
+                <select class="form-select" id="controlType" onchange="populateNumbers()"></select>
             </div>
             <div class="col-md-5">
-                <label class="form-label" data-i18n="lblTag">Number</label> <div class="input-group">
-                    <span class="input-group-text border-end-0"><i class="bi bi-tag"></i></span>
-                    <select class="form-select border-start-0 ps-0" id="controlNumber" onchange="showData()" disabled></select>
-                </div>
+                <label class="form-label">
+                    <i class="bi bi-tag label-icon"></i>
+                    <span data-i18n="lblTag">Number</span>
+                </label>
+                <select class="form-select" id="controlNumber" onchange="showData()" disabled></select>
             </div>
         </div>
     </div>
@@ -396,25 +380,27 @@
 </footer>
 
 <script>
-    // --- 1. TRANSLATIONS (Refined for technical accuracy) ---
+    // --- 1. CLEAN TRANSLATIONS (Simplified per request) ---
     const translations = {
         ar: {
             mainTitle: "سجل صمامات التحكم",
             subTitle: "نظام الاستعلام الفني",
             lblType: "نوع الصمام",
-            lblTag: "الرقم", // Changed from 'رقم التاق'
+            lblTag: "الرقم",
             optSelect: "-- اختر النوع --",
             optSelectNum: "-- اختر الرقم --",
             placeholder: "يرجى اختيار البيانات لعرض التفاصيل",
             dataHeader: "البيانات الفنية",
             footerText: "قسم عمليات المصنع © 2025",
+            // Simple headers
+            h_tag: "رقم التاق",
             h_service: "الوظيفة / الخدمة",
-            h_action: "حالة الفشل (Failure Action)", // Clarified
-            h_handjack: "تجاوز (Hand Jack)",
+            h_action: "حالة الفشل",
+            h_handjack: "تجاوز",
             h_pefs: "رقم المخطط (PEFS)",
             h_location: "الموقع",
-            h_tag: "رقم التاق",
-            actions: { FC: "يغلق (FC)", FO: "يفتح (FO)", FL: "يثبت (FL)", "-": "-" },
+            // Simple values
+            actions: { FC: "يغلق", FO: "يفتح", FL: "يثبت", "-": "-" },
             types: {
                 FV: "صمام تدفق", HV: "صمام يدوي", LV: "صمام مستوى",
                 PDV: "صمام فرق ضغط", PV: "صمام ضغط", TV: "صمام حرارة"
@@ -424,19 +410,21 @@
             mainTitle: "Control Valves Log",
             subTitle: "Technical Inquiry System",
             lblType: "Valve Type",
-            lblTag: "Number", // Changed label
+            lblTag: "Number",
             optSelect: "-- Select Type --",
             optSelectNum: "-- Select Number --",
             placeholder: "Please select data to view details",
             dataHeader: "Technical Data",
             footerText: "Plant Operations Dept. © 2025",
+            // Simple headers
+            h_tag: "Tag No.",
             h_service: "Service Description",
             h_action: "Failure Action",
             h_handjack: "Hand Jack / Bypass",
             h_pefs: "PEFS No.",
             h_location: "Location",
-            h_tag: "Tag No.",
-            actions: { FC: "Closes (FC)", FO: "Opens (FO)", FL: "Locks (FL)", "-": "N/A" },
+            // Simple values
+            actions: { FC: "Close", FO: "Open", FL: "Lock", "-": "N/A" },
             types: {
                 FV: "Flow Valve", HV: "Hand Valve", LV: "Level Valve",
                 PDV: "Diff. Pressure Valve", PV: "Pressure Valve", TV: "Temp. Valve"
@@ -444,7 +432,7 @@
         }
     };
 
-    // --- 2. DATABASE (Updated Terms: 'تغذية', 'النفط الخام') ---
+    // --- 2. DATABASE (Same content, logic handles display) ---
     const database = [
         // FV Group
         { t: "FV", n: "01-FV-00001",  act: "FC", hj: "YES", pefs: "J-001",     s_en: "RETURN OIL SLOPS TO CRUDE FEED PUMP P-001A/B", s_ar: "إرجاع رواسب الزيت إلى مضخة تغذية النفط الخام P-001A/B", l_en: "NEAR CRUDE FEED PUMP P-001A/B", l_ar: "بالقرب من مضخة تغذية النفط الخام P-001A/B" },
@@ -565,7 +553,6 @@
     let curLang = localStorage.getItem('cv-lang') || (navigator.language.startsWith('ar') ? 'ar' : 'en');
 
     document.addEventListener('DOMContentLoaded', () => {
-        // Theme Initialization
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
              const newTheme = event.matches ? 'dark' : 'light';
              document.documentElement.setAttribute('data-theme', newTheme);
@@ -604,7 +591,6 @@
     function applyLanguageUI() {
         document.body.dir = curLang === 'ar' ? 'rtl' : 'ltr';
         
-        // Slider Animation
         const container = document.getElementById('lang-switch');
         const optEn = document.getElementById('opt-en');
         const optAr = document.getElementById('opt-ar');
@@ -619,14 +605,12 @@
             optAr.classList.remove('active');
         }
         
-        // Translate Text
         document.querySelectorAll('[data-i18n]').forEach(el => {
             let key = el.getAttribute('data-i18n');
             if (translations[curLang][key]) el.innerText = translations[curLang][key];
         });
     }
 
-    // Data Helpers
     function getCleanNumber(fullTag) {
         const parts = fullTag.split('-');
         const lastPart = parts[parts.length - 1];
@@ -697,12 +681,12 @@
                 const t = translations[curLang];
                 const isAr = curLang === 'ar';
                 
-                // Status Icons Logic
+                // Logic: Icons only for Handjack
                 let hjDisplay = "";
                 if (record.hj === "YES") {
-                    hjDisplay = `<i class="bi bi-check-circle-fill status-icon text-ok"></i> YES`;
+                    hjDisplay = `<i class="bi bi-check-circle-fill text-ok status-icon-only"></i>`;
                 } else if (record.hj === "NO") {
-                    hjDisplay = `<i class="bi bi-x-circle-fill status-icon text-no"></i> NO`;
+                    hjDisplay = `<i class="bi bi-x-circle-fill text-no status-icon-only"></i>`;
                 } else {
                     hjDisplay = record.hj;
                 }
@@ -710,13 +694,13 @@
                 let serviceText = isAr ? record.s_ar : record.s_en;
                 let locationText = isAr ? record.l_ar : record.l_en;
                 
-                // Auto-format pump codes for readability
                 serviceText = formatPumpCodes(serviceText);
                 locationText = formatPumpCodes(locationText);
 
                 const rows = [
                     { label: t.h_tag, value: `<span class="tag-badge">${record.n}</span>` },
                     { label: t.h_service, value: serviceText },
+                    // Just the translated action (Open/Close)
                     { label: t.h_action, value: t.actions[record.act] || record.act },
                     { label: t.h_handjack, value: hjDisplay },
                     { label: t.h_pefs, value: record.pefs },
