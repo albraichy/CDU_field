@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سجل صمامات التحكم - Control Valves Log</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: 30px auto; background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #eee; padding-bottom: 15px; }
+        h2 { color: #2c3e50; margin: 0; }
+        p.subtitle { color: #7f8c8d; font-size: 14px; margin-top: 5px; }
+        
+        .filters { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; background: #f8f9fa; padding: 20px; border-radius: 8px; border: 1px solid #e9ecef; }
+        .form-group { display: flex; flex-direction: column; min-width: 200px; }
+        label { font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #555; }
+        select { padding: 10px; border-radius: 6px; border: 1px solid #ced4da; font-size: 15px; background: white; cursor: pointer; outline: none; transition: border-color 0.2s; }
+        select:focus { border-color: #007bff; }
+        select:disabled { background-color: #e9ecef; cursor: not-allowed; }
+
+        #resultArea { margin-top: 25px; min-height: 200px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        th, td { padding: 15px; text-align: right; border-bottom: 1px solid #eee; }
+        th { background-color: #34495e; color: white; width: 30%; font-weight: 500; }
+        td { background-color: white; color: #333; font-weight: 500; }
+        tr:last-child td { border-bottom: none; }
+        
+        .no-data { text-align: center; color: #95a5a6; margin-top: 40px; font-size: 16px; }
+        .tag-badge { display: inline-block; background: #e1f5fe; color: #0288d1; padding: 5px 10px; border-radius: 4px; font-weight: bold; font-family: monospace; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h2>LIST OF CONTROL VALVES</h2>
+        <p class="subtitle">نظام الاستعلام عن بيانات الصمامات</p>
+    </header>
+    
+    <div class="filters">
+        <div class="form-group">
+            <label>نوع الكنترول (Valve Type)</label>
+            <select id="controlType" onchange="populateNumbers()">
+                <option value="">-- اختر النوع --</option>
+                </select>
+        </div>
+
+        <div class="form-group">
+            <label>رقم التاق (Tag No)</label>
+            <select id="controlNumber" onchange="showData()" disabled>
+                <option value="">-- اختر الرقم --</option>
+            </select>
+        </div>
+    </div>
+
+    <div id="resultArea">
+        <div id="placeholder" class="no-data">
+            يرجى اختيار نوع الصمام ورقم التاق لعرض التفاصيل الفنية والموقع.
+        </div>
+        
+        <table id="dataTable" style="display: none;">
+            <tbody id="tableBody">
+                </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    /* تم استخلاص البيانات من الصورة المرفقة.
+       ملاحظة: تم تصنيف الأنواع بناءً على الحروف الموجودة في الـ Tag No
+       FV = Flow, LV = Level, PV = Pressure, TV = Temperature, HV = Hand, PDV = Pressure Diff
+    */
+    const database = [
+        // --- FV (Flow Valves) ---
+        { type: "FV (Flow Control)", number: "01-FV-00001", data: { "Service": "RETURN OIL SLOPS TO CRUDE FEED PUMP P-001A/B", "Action": "FC", "Hand Jack": "YES", "PEFS": "J-001", "Location": "NEAR CRUDE FEED PUMP P-001A/B" } },
+        { type: "FV (Flow Control)", number: "01-FV-00002", data: { "Service": "CRUDE FEED FROM CRUDE FEED PUMP P-001A/B", "Action": "FC", "Hand Jack": "YES", "PEFS": "J-001", "Location": "NEAR DEMULSIFIER INJECTION PACKAGE" } },
+        { type: "FV (Flow Control)", number: "01-FV-00005", data: { "Service": "CRUDE FEED PUMP (P-0001) MIN FLOW", "Action": "FO", "Hand Jack": "YES", "PEFS": "J-001", "Location": "NEAR CRUDE FEED PUMP P-001A/B" } },
+        { type: "FV (Flow Control)", number: "01-FV-00006", data: { "Service": "P-0021 A/B MINIMUM FLOW BYPASS", "Action": "FC", "Hand Jack": "YES", "PEFS": "J-010-002", "Location": "P-0021 A/B STRUCTURE FIRST FLOOR" } },
+        { type: "FV (Flow Control)", number: "01-FV-00014", data: { "Service": "EFFLUENT WATER FROM MUD WASH PUMPS P-0027A/B", "Action": "FC", "Hand Jack": "NO", "PEFS": "J-007-002", "Location": "NEAR PUMP P-0027A" } },
+        { type: "FV (Flow Control)", number: "01-FV-00021A", data: { "Service": "FLASHED CRUDE PASS 1 TO CRUDE HEATER F-0001", "Action": "FL", "Hand Jack": "YES", "PEFS": "J-015", "Location": "HEATER STRUCTURE NO.4 TOP FLOOR" } },
+        { type: "FV (Flow Control)", number: "01-FV-00022", data: { "Service": "REFINERY FUEL GAS FROM DISTRIBUTION HEADER", "Action": "FC", "Hand Jack": "YES", "PEFS": "J-017", "Location": "NEAR DECOKING DRUM (SOUTH SIDE)" } },
+        { type: "FV (Flow Control)", number: "01-FV-00023", data: { "Service": "PLANT FUEL OIL SUPPLY FROM DISTRIBUTION HEADER", "Action": "FC", "Hand Jack": "YES", "PEFS": "J-017", "Location": "HEATER GROUND FLOOR (WEST SIDE)" } },
+        { type: "FV (Flow Control)", number: "01-FV-00026", data: { "Service": "INTAKE AIR TO COMBUSTION AIR BLOWER F-0001-K-01", "Action": "FL", "Hand Jack": "NO", "PEFS": "J-019", "Location": "FD FAN SUCTION LINE" } },
+        { type: "FV (Flow Control)", number: "01-FV-00027", data: { "Service": "REFLUX TO CRUDE DISTILLATION COLUMN C-0001", "Action": "FO", "Hand Jack": "YES", "PEFS": "J-023", "Location": "V-0004 STRUCTURE 8TH FLOOR (NEAR E-0001)" } },
+        { type: "FV (Flow Control)", number: "01-FV-00036", data: { "Service": "STRIP. STEAM TO C-0003", "Action": "FC", "Hand Jack": "YES", "PEFS": "J-033", "Location": "V-0004 STRUCTURE 3RD FLOOR" } },
+        { type: "FV (Flow Control)", number: "01-FV-00037", data: { "Service": "HEAVY DIESEL PRODUCT TO E-0008", "Action": "FC", "Hand Jack": "YES", "PEFS": "J-035", "Location": "NEAR P-00118" } },
+        { type: "FV (Flow Control)", number: "01-FV-00041", data: { "Service": "SOUR LPG PRODUCT TO SGU", "Action": "FC", "Hand Jack": "NO", "PEFS": "J-040-002", "Location": "NEAR P-0016A (WEST SIDE)" } },
+
+        // --- HV (Hand Valves / Others) ---
+        { type: "HV (Hand/Other)", number: "01-HV-00030", data: { "Service": "ATH RESIDUE BYPASS TO EXCHANGER E-0012E/F/G/H", "Action": "FO", "Hand Jack": "YES", "PEFS": "J-009-001", "Location": "NORTH SIDE OF V-0001" } },
+        { type: "HV (Hand/Other)", number: "01-HV-00125", data: { "Service": "DIESEL PRODUCT AIR COOLER 01-E-0042A", "Action": "-", "Hand Jack": "NO", "PEFS": "J-014-003", "Location": "NEAR E-0012E/F (SOUTH SIDE)" } },
+        { type: "HV (Hand/Other)", number: "01-HV-00126", data: { "Service": "DIESEL PRODUCT AIR COOLER 01-E-0042A", "Action": "-", "Hand Jack": "NO", "PEFS": "J-034", "Location": "FIN FAN STRUCTURE NEAR E-0042" } },
+        { type: "HV (Hand/Other)", number: "01-HV-00127", data: { "Service": "DIESEL PRODUCT AIR COOLER 01-E-0042B", "Action": "-", "Hand Jack": "NO", "PEFS": "J-034", "Location": "FIN FAN STRUCTURE NEAR E-0042" } },
+        { type: "HV (Hand/Other)", number: "01-HV-00230", data: { "Service": "CRUDE FEED FROM CRUDE FEED PUMP P-0001A/B", "Action": "FC", "Hand Jack": "NO", "PEFS": "J-002", "Location": "FIN FAN STRUCTURE NEAR E-0042" } },
+
+        // --- LV (Level Valves) ---
+        { type: "LV (Level Control)", number: "01-LV-00002", data: { "Service": "EFL WTR TO DESALTER EFL WTR FLASH DRUM V-0014", "Action": "-", "Hand Jack": "NO", "PEFS": "J-002-002", "Location": "V-0004 STRUCTURE 5TH FLOOR (NEAR E-0001)" } },
+        { type: "LV (Level Control)", number: "01-LV-00005", data: { "Service": "WASH WATER FM DESALTER WASH WATER PUMP P-0013A/B", "Action": "FC", "Hand Jack": "YES", "PEFS": "J-005", "Location": "NEAR P-0014A" } },
+        { type: "LV (Level Control)", number: "01-LV-00018", data: { "Service": "SOUR WATER TO SOUR WATER STRIPPER 058L", "Action": "FC", "Hand Jack": "YES", "PEFS": "J-009-001", "Location": "BETWEEN V-0001 & V-0002" } },
+        { type: "LV (Level Control)", number: "01-LV-00019", data: { "Service": "KEROSENE TO KEROSENE STRIPPER 01-C-0002", "Action": "FC", "Hand Jack": "YES", "PEFS": "J-029-002", "Location": "NEAR P-0008B" } },
+        { type: "LV (Level Control)", number: "01-LV-00021", data: { "Service": "LIGHT DIESEL TO LIGHT DIESEL STRIPPER 01-C-0003", "Action": "FC", "Hand Jack": "YES", "PEFS": "J-031-001", "Location": "V-0004 STRUCTURE 2ND FLOOR (NEAR E-0016)" } },
+        { type: "LV (Level Control)", number: "01-LV-00023", data: { "Service": "HEAVY DIESEL TO HEAVY DIESEL STRIPPER 01-C-0004", "Action": "FC", "Hand Jack": "YES", "PEFS": "J-033", "Location": "V-0004 STRUCTURE 4TH FLOOR" } },
+        { type: "LV (Level Control)", number: "01-LV-00030", data: { "Service": "SOR WATER FROM STAB OVERHD ACCUMULATOR 01-V-0007", "Action": "FO", "Hand Jack": "YES", "PEFS": "J-040", "Location": "V-0001 COLUM STRUCTURE" } },
+
+        // --- PDV (Pressure Diff/Other) ---
+        { type: "PDV (Diff Pressure)", number: "01-PDV-00037", data: { "Service": "CRT FEED TO 1ST STG DSLTR STATIC MXR V-0001-M-01", "Action": "FC", "Hand Jack": "NO", "PEFS": "J-007-001", "Location": "BETWEEN V-0001 & V-0002" } },
+        { type: "PDV (Diff Pressure)", number: "01-PDV-00086", data: "NTRMDTE PRESSURE STEAM FROM DISTRIBUTION HEADER", "Action": "FO", "Hand Jack": "YES", "PEFS": "J-017", "Location": "HEATER GROUND FLOOR (WEST SIDE)" },
+        
+        // --- PV (Pressure Valves) ---
+        { type: "PV (Pressure Control)", number: "01-PV-00006", data: { "Service": "PREFLASH VAPOR FROM CRUDE PREFLASH DRUM V-0003", "Action": "FC", "Hand Jack": "YES", "PEFS": "J-013-001", "Location": "FINFAN STRUCTURE MIDDLE" } },
+        { type: "PV (Pressure Control)", number: "01-PV-00092A", data: { "Service": "ON CRUDE HEATER F-0001", "Action": "FL", "Hand Jack": "NO", "PEFS": "J-019", "Location": "ID FAN SUCTION LINE" } },
+        { type: "PV (Pressure Control)", number: "01-PV-00112A", data: { "Service": "REFINERY FG TO CRD OVERHEAD ACCUM V-0004", "Action": "FC", "Hand Jack": "YES", "PEFS": "J-029-001", "Location": "V-0004 STRUCTURE 2ND FLOOR (NEAR E-0016)" } },
+        { type: "PV (Pressure Control)", number: "01-PV-00121", data: { "Service": "KEROSENE PRODUCT TO KHT-25", "Action": "FC", "Hand Jack": "YES", "PEFS": "J-032", "Location": "B/L SOUTH SIDE" } },
+        
+        // --- TV (Temperature Valves) ---
+        { type: "TV (Temp Control)", number: "01-TV-00367", data: { "Service": "AR RYP FR CRD / AR EXCHANGER E-0010A/B/C/D", "Action": "FC", "Hand Jack": "NO", "PEFS": "J-054-009", "Location": "NEAR P-00128" } },
+        { type: "TV (Temp Control)", number: "01-TV-00418", data: { "Service": "CRD/ATM RESIDUE FEED/ATM RESIDUE EXCH E-0004A/B E-0005", "Action": "FC", "Hand Jack": "NO", "PEFS": "J-012-001", "Location": "SOUTH SIDE OF E-0008A/B" } },
+        { type: "TV (Temp Control)", number: "01-TV-00061", data: { "Service": "BOTTOM PA FROM BOTTOMS PUMPAROUND PUMP P-0005A/B", "Action": "FC", "Hand Jack": "YES", "PEFS": "J-015", "Location": "NEAR FD FAN MOTOR" } },
+        { type: "TV (Temp Control)", number: "01-TV-00064", data: { "Service": "COMBSN AIR FROM COMB AIR BLOWER F-0001-K-015", "Action": "FC", "Hand Jack": "YES", "PEFS": "J-019", "Location": "HEATER GROUND FLOOR (WEST SIDE)" } },
+        { type: "TV (Temp Control)", number: "01-TV-00091", data: { "Service": "TOP PA BYPASS TO CRD DISTILLATION COLUMN C-0001", "Action": "FC", "Hand Jack": "YES", "PEFS": "J-021-002", "Location": "NEAR P-0003A/C (SOUTH SIDE)" } }
+    ];
+
+    const typeSelect = document.getElementById('controlType');
+    const numSelect = document.getElementById('controlNumber');
+    const table = document.getElementById('dataTable');
+    const tableBody = document.getElementById('tableBody');
+    const placeholder = document.getElementById('placeholder');
+
+    // 1. استخراج أنواع الكنترولات الفريدة
+    const types = [...new Set(database.map(item => item.type))].sort();
+    
+    types.forEach(type => {
+        const option = document.createElement('option');
+        option.value = type;
+        option.textContent = type;
+        typeSelect.appendChild(option);
+    });
+
+    // 2. دالة تعبئة أرقام التاق بناءً على النوع المختار
+    function populateNumbers() {
+        const selectedType = typeSelect.value;
+        numSelect.innerHTML = '<option value="">-- اختر الرقم --</option>';
+        numSelect.disabled = true;
+        
+        // إخفاء الجدول
+        table.style.display = "none";
+        placeholder.style.display = "block";
+
+        if (selectedType) {
+            const filteredItems = database.filter(item => item.type === selectedType);
+            
+            // ترتيب الأرقام أبجدياً
+            filteredItems.sort((a, b) => a.number.localeCompare(b.number));
+
+            filteredItems.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.number;
+                option.textContent = item.number;
+                numSelect.appendChild(option);
+            });
+            numSelect.disabled = false;
+        }
+    }
+
+    // 3. دالة عرض البيانات عند اختيار الرقم
+    function showData() {
+        const selectedType = typeSelect.value;
+        const selectedNum = numSelect.value;
+        tableBody.innerHTML = "";
+
+        if (selectedType && selectedNum) {
+            const record = database.find(item => item.type === selectedType && item.number === selectedNum);
+            
+            if (record) {
+                // ترتيب الحقول للعرض
+                const fieldMap = {
+                    "Service": "الخدمة (Service)",
+                    "Action": "الحالة (FC/FO/FL)",
+                    "Hand Jack": "Hand Jack / Bypass",
+                    "PEFS": "رقم المخطط (PEFS)",
+                    "Location": "الموقع (Location)"
+                };
+
+                for (const [key, label] of Object.entries(fieldMap)) {
+                    if (record.data[key]) {
+                        const row = `
+                            <tr>
+                                <th>${label}</th>
+                                <td>
+                                    ${key === 'Location' ? '📍 ' + record.data[key] : record.data[key]}
+                                </td>
+                            </tr>`;
+                        tableBody.innerHTML += row;
+                    }
+                }
+                
+                // إضافة التاق كرقم مميز
+                const tagRow = `
+                    <tr>
+                        <th>رقم التاق (Tag No)</th>
+                        <td><span class="tag-badge">${record.number}</span></td>
+                    </tr>
+                `;
+                tableBody.insertAdjacentHTML('afterbegin', tagRow);
+
+                table.style.display = "table";
+                placeholder.style.display = "none";
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
