@@ -4,8 +4,29 @@
 
 const database = [
 
-    // SC Group
-    { t: "SC", n: "01-SC-0001",  act: "FC", hj: "YES", pefs: "J-001",     s_en: "Crude Feed sample collection point", s_ar: "نقطة جمع عينة تغذية النفط", l_en: "EAST OF CRUDE FEED PUMP P1 A/B", l_ar: "شرق مضخة تغذية النفط الخام P-001A/B" },
+      // --- EIV Group ---
+    // Note: 'pefs' field is used to store 'Pump No.' for reference
+    // Note: 'act' and 'hj' are set to '-' as they are not applicable
+    { t: "EIV", n: "01-EIV-002", act: "-", hj: "-", pefs: "P0002 A/B", s_en: "FLASHED CRUDE (Suction)", s_ar: "النفط الخام الومضي (سحب)", l_en: "Ground Floor, Near V-0003 (structure 06) Staircase", l_ar: "الطابق الأرضي، قرب سلم V-0003 (هيكل 06)" },
+    { t: "EIV", n: "01-EIV-003", act: "-", hj: "-", pefs: "01-F-0001", s_en: "Crude Heater", s_ar: "سخان النفط الخام", l_en: "Ground Floor, Near E-0001A/D (structure 03) Staircase", l_ar: "الطابق الأرضي، قرب سلم E-0001A/D (هيكل 03)" },
+    { t: "EIV", n: "01-EIV-004", act: "-", hj: "-", pefs: "P0012 A", s_en: "ATM. RESIDUE", s_ar: "مخلفات التقطير الجوي", l_en: "Ground Floor, Near E-0001A/D (structure 03) Staircase", l_ar: "الطابق الأرضي، قرب سلم E-0001A/D (هيكل 03)" },
+    { t: "EIV", n: "01-EIV-005", act: "-", hj: "-", pefs: "P0007 A/B", s_en: "CRUD. COL. REF. PROD.", s_ar: "منتج ارتجاع عمود الخام", l_en: "Ground Floor, Near E-0001A/D (structure 03) Staircase", l_ar: "الطابق الأرضي، قرب سلم E-0001A/D (هيكل 03)" },
+    { t: "EIV", n: "01-EIV-006", act: "-", hj: "-", pefs: "P0009 A/B", s_en: "KEROSENE PRODUCT", s_ar: "منتج الكيروسين", l_en: "Ground Floor, Near E-0001A/D (structure 03) Staircase", l_ar: "الطابق الأرضي، قرب سلم E-0001A/D (هيكل 03)" },
+    { t: "EIV", n: "01-EIV-007", act: "-", hj: "-", pefs: "P0010 A/B", s_en: "LIGHT DIESEL PROD.", s_ar: "منتج الديزل الخفيف", l_en: "Ground Floor, Near E-0001A/D (structure 03) Staircase", l_ar: "الطابق الأرضي، قرب سلم E-0001A/D (هيكل 03)" },
+    { t: "EIV", n: "01-EIV-008", act: "-", hj: "-", pefs: "P0011 A/B", s_en: "HEAVY DIESEL PROD.", s_ar: "منتج الديزل الثقيل", l_en: "Ground Floor, South side", l_ar: "الطابق الأرضي، الجانب الجنوبي" },
+    { t: "EIV", n: "01-EIV-009", act: "-", hj: "-", pefs: "P0015 A/B", s_en: "STABILIZER FEED", s_ar: "تغذية المثبت", l_en: "Ground Floor, Near V-0006 (Structure 01) staircase", l_ar: "الطابق الأرضي، قرب سلم V-0006 (هيكل 01)" },
+    { t: "EIV", n: "01-EIV-010", act: "-", hj: "-", pefs: "01-V-0007", s_en: "SOUR WATER TO V0004", s_ar: "المياه الحامضة إلى V0004", l_en: "Ground Floor, Near V-0006 (Structure 01) staircase", l_ar: "الطابق الأرضي، قرب سلم V-0006 (هيكل 01)" },
+    { t: "EIV", n: "01-EIV-011", act: "-", hj: "-", pefs: "P0017 A/B", s_en: "STAB. NAPHTHA", s_ar: "النافثا المثبتة", l_en: "Ground Floor, Near C-0005 (Structure 01)", l_ar: "الطابق الأرضي، قرب C-0005 (هيكل 01)" },
+    { t: "EIV", n: "01-EIV-012", act: "-", hj: "-", pefs: "P0016 A/B", s_en: "STAB. REFL./ LPG PROD.", s_ar: "ارتجاع المثبت / منتج الغاز المسال", l_en: "Ground Floor, Near V-0006 (Structure 01) staircase", l_ar: "الطابق الأرضي، قرب سلم V-0006 (هيكل 01)" },
+    { t: "EIV", n: "01-EIV-013", act: "-", hj: "-", pefs: "P0008 A/B", s_en: "SOUR WATER", s_ar: "المياه الحامضة", l_en: "Ground Floor, Near E-00015A/B (structure 03) Staircase", l_ar: "الطابق الأرضي، قرب سلم E-00015A/B (هيكل 03)" },
+    { t: "EIV", n: "01-EIV-110", act: "-", hj: "-", pefs: "Heater Tube", s_en: "MP steam to Crude Heater", s_ar: "بخار MP إلى سخان الخام", l_en: "Ground Floor, Near E-0001A/D (structure 03) Staircase", l_ar: "الطابق الأرضي، قرب سلم E-0001A/D (هيكل 03)" },
+    { t: "EIV", n: "01-EIV-120", act: "-", hj: "-", pefs: "P0003 A/B", s_en: "TOP PA (Pump Around)", s_ar: "خط التدوير العلوي (Top PA)", l_en: "At Platform Structure 05", l_ar: "على منصة الهيكل 05" },
+    { t: "EIV", n: "01-EIV-121", act: "-", hj: "-", pefs: "P0004 A/B", s_en: "MID. PA (Pump Around)", s_ar: "خط التدوير الأوسط (Mid PA)", l_en: "At Platform Structure 05", l_ar: "على منصة الهيكل 05" },
+    { t: "EIV", n: "01-EIV-123", act: "-", hj: "-", pefs: "P0005 A/B", s_en: "BOT. PA (Pump Around)", s_ar: "خط التدوير السفلي (Bot PA)", l_en: "At Platform Structure 05", l_ar: "على منصة الهيكل 05" },
+    { t: "EIV", n: "01-EIV-153", act: "-", hj: "-", pefs: "01-K-0001A", s_en: "Off gas compressor suction", s_ar: "سحب ضاغط الغازات المنبعثة", l_en: "Ground Floor, Near operator shelter", l_ar: "الطابق الأرضي، قرب مظلة المشغلين" },
+    { t: "EIV", n: "01-EIV-154", act: "-", hj: "-", pefs: "01-K-0001A", s_en: "To Off gas compressor discharge cooler", s_ar: "إلى مبرد تفريغ ضاغط الغازات", l_en: "Ground Floor, Near operator shelter", l_ar: "الطابق الأرضي، قرب مظلة المشغلين" },
+    { t: "EIV", n: "01-EIV-155", act: "-", hj: "-", pefs: "11-K-0001A", s_en: "Off gas compressor suction", s_ar: "سحب ضاغط الغازات المنبعثة", l_en: "Ground floor, Below Flare KOD", l_ar: "الطابق الأرضي، تحت وعاء المشعل (Flare KOD)" },
+    { t: "EIV", n: "01-EIV-156", act: "-", hj: "-", pefs: "11-K-0001A", s_en: "To Off gas compressor discharge cooler", s_ar: "إلى مبرد تفريغ ضاغط الغازات", l_en: "Ground floor, Below Flare KOD", l_ar: "الطابق الأرضي، تحت وعاء المشعل (Flare KOD)" },
     
     // FV Group
     { t: "FV", n: "01-FV-00001",  act: "FC", hj: "YES", pefs: "J-001",     s_en: "RETURN OIL SLOPS TO CRUDE FEED PUMP P-001A/B", s_ar: "إرجاع رواسب الزيت إلى مضخة تغذية النفط الخام P-001A/B", l_en: "NEAR CRUDE FEED PUMP P-001A/B", l_ar: "بالقرب من مضخة تغذية النفط الخام P-001A/B" },
