@@ -3,6 +3,10 @@
 // Updated with final technical Arabic translations (e.g., Pump Around -> خط التدوير)
 
 const database = [
+
+    // SC Group
+    { t: "SC", n: "01-SC-0001",  act: "FC", hj: "YES", pefs: "J-001",     s_en: "Crude Feed sample collection point", s_ar: "نقطة جمع عينة تغذية النفط", l_en: "EAST OF CRUDE FEED PUMP P1 A/B", l_ar: "شرق مضخة تغذية النفط الخام P-001A/B" },
+    
     // FV Group
     { t: "FV", n: "01-FV-00001",  act: "FC", hj: "YES", pefs: "J-001",     s_en: "RETURN OIL SLOPS TO CRUDE FEED PUMP P-001A/B", s_ar: "إرجاع رواسب الزيت إلى مضخة تغذية النفط الخام P-001A/B", l_en: "NEAR CRUDE FEED PUMP P-001A/B", l_ar: "بالقرب من مضخة تغذية النفط الخام P-001A/B" },
     { t: "FV", n: "01-FV-00002",  act: "FC", hj: "YES", pefs: "J-001",     s_en: "CRUDE FEED FROM CRUDE FEED PUMP P-0001A/B", s_ar: "تغذية النفط الخام من مضخة الخام P-0001A/B", l_en: "NEAR DEMULSIFIER INJECTION PACKAGE", l_ar: "بالقرب من وحدة حقن مزيل الاستحلاب" },
